@@ -9,6 +9,51 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MedicalBusiness",
+      "name": "HomeHub Homeopathy",
+      "image": "http://localhost:5173/client/public/doctor-handshake.jpg",
+      "@id": "http://localhost:5173/#medicalbusiness",
+      "url": "http://localhost:5173",
+      "telephone": "+919829593852",
+      "priceRange": "₹₹",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "102, Apex Mall, Lalkothi",
+        "addressLocality": "Jaipur",
+        "addressRegion": "Rajasthan",
+        "postalCode": "302015",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 26.8900,
+        "longitude": 75.8038
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          "opens": "09:00",
+          "closes": "20:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Sunday",
+          "opens": "10:00",
+          "closes": "14:00"
+        }
+      ],
+      "medicalSpecialty": [
+        "Homeopathic",
+        "Pediatric",
+        "Endocrine",
+        "Dermatology"
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

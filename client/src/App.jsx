@@ -1,3 +1,5 @@
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
 import Header from './components/Header.jsx'
 import Hero from './components/Hero.jsx'
 import Stats from './components/Stats.jsx'
@@ -15,7 +17,17 @@ import WhatsAppFloat from './components/WhatsAppFloat.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'
 import InteractiveBackground from './components/InteractiveBackground.jsx'
 import Treatments from './pages/Treatments.jsx'
-import { useRoute } from './lib/router.js'
+import TreatmentDetailPage from './pages/TreatmentDetailPage.jsx'
+import DoctorsPage from './pages/DoctorsPage.jsx'
+import AboutPage from './pages/AboutPage.jsx'
+import ContactPage from './pages/ContactPage.jsx'
+import LoginPage from './pages/LoginPage.jsx'
+import RegisterPage from './pages/RegisterPage.jsx'
+import DashboardPage from './pages/DashboardPage.jsx'
+import AdminDashboard from './pages/admin/AdminDashboard.jsx'
+import NotFoundPage from './pages/NotFoundPage.jsx'
+import { PrivacyPage, TermsPage } from './pages/PrivacyPage.jsx'
+import { ProtectedRoute } from './components/ProtectedRoute.jsx'
 import { useEffect } from 'react'
 
 function Home() {
@@ -59,17 +71,43 @@ function Home() {
 }
 
 export default function App() {
-  const path = useRoute()
-  const isTreatments = path === '/treatments'
-
   return (
-    <>
+    <BrowserRouter>
       <InteractiveBackground />
       <Header />
-      {isTreatments ? <Treatments /> : <Home />}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/treatments" element={<Treatments />} />
+        <Route path="/treatments/:slug" element={<TreatmentDetailPage />} />
+        <Route path="/doctors" element={<DoctorsPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route 
+          path="/dashboard" 
+          element={
+            <ProtectedRoute>
+              <DashboardPage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/admin" 
+          element={
+            <ProtectedRoute adminOnly={true}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          } 
+        />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
       <Footer />
       <WhatsAppFloat />
       <ScrollToTop />
-    </>
+      <Toaster position="top-right" toastOptions={{ duration: 4000 }} />
+    </BrowserRouter>
   )
 }
