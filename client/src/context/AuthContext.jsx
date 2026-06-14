@@ -56,10 +56,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Register handler
-  const register = async (name, email, password, phone) => {
+  const register = async (name, email, password, phone, role) => {
     setLoading(true);
     try {
-      const response = await authService.register({ name, email, password, phone });
+      const response = await authService.register({ name, email, password, phone, role });
       if (response?.success && response?.token) {
         localStorage.setItem('homehub_token', response.token);
         setToken(response.token);

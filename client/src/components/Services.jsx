@@ -1,28 +1,31 @@
 import React from 'react';
+import { getTreatmentIcon } from '../lib/icons.jsx';
 
 const services = [
-  { icon: '🩸', title: 'Diabetic Management', desc: 'Long-term blood sugar regulation through individualised homeopathic protocols.' },
-  { icon: '🚽', title: 'Constipation Treatment', desc: 'Gentle, root-cause therapy that restores natural digestive rhythm.' },
-  { icon: '🩹', title: 'Piles & Fissure Relief', desc: 'Non-surgical care for painful piles, fistula and chronic anal fissures.' },
-  { icon: '❤️', title: 'Blood Pressure Regulation', desc: 'Balancing high and low BP without dependence on long-term suppressants.' },
-  { icon: '😮‍💨', title: 'Bronchial Asthma', desc: 'Reduce attacks, dependence on inhalers, and rebuild respiratory strength.' },
-  { icon: '🤧', title: 'Respiratory Tract Infections', desc: 'Recurrent cold, cough and sinus problems treated at the root.' },
-  { icon: '🫁', title: 'Pneumonia Care', desc: 'Supportive homeopathic care for recovery and long-term lung health.' },
-  { icon: '🌸', title: 'Allergic Rhinitis', desc: 'End the seasonal sneezing cycle with constitutional homeopathy.' },
-  { icon: '💨', title: 'COPD Management', desc: 'Slow progression, ease breathing, and improve quality of life.' },
-  { icon: '🌬️', title: 'Interstitial Lung Disease', desc: 'Adjunct homeopathic support for ILD symptom relief and stability.' },
-  { icon: '🧠', title: 'Counselling & Therapy', desc: 'Therapy sessions for stress, anxiety, sleep and emotional well-being.' },
-  { icon: '🧘‍♂️', title: 'Wellness & Lifestyle', desc: 'Personalised plans blending diet, yoga and naturopathy with homeopathy.' },
+  { iconIdentifier: '🩸', title: 'Diabetic Management', desc: 'Long-term blood sugar regulation through individualised homeopathic protocols.' },
+  { iconIdentifier: '🚽', title: 'Constipation Treatment', desc: 'Gentle, root-cause therapy that restores natural digestive rhythm.' },
+  { iconIdentifier: '🩹', title: 'Piles & Fissure Relief', desc: 'Non-surgical care for painful piles, fistula and chronic anal fissures.' },
+  { iconIdentifier: '❤️', title: 'Blood Pressure Regulation', desc: 'Balancing high and low BP without dependence on long-term suppressants.' },
+  { iconIdentifier: '😮‍💨', title: 'Bronchial Asthma', desc: 'Reduce attacks, dependence on inhalers, and rebuild respiratory strength.' },
+  { iconIdentifier: '🤧', title: 'Respiratory Tract Infections', desc: 'Recurrent cold, cough and sinus problems treated at the root.' },
+  { iconIdentifier: '🫁', title: 'Pneumonia Care', desc: 'Supportive homeopathic care for recovery and long-term lung health.' },
+  { iconIdentifier: '🌸', title: 'Allergic Rhinitis', desc: 'End the seasonal sneezing cycle with constitutional homeopathy.' },
+  { iconIdentifier: '💨', title: 'COPD Management', desc: 'Slow progression, ease breathing, and improve quality of life.' },
+  { iconIdentifier: '🌬️', title: 'Interstitial Lung Disease', desc: 'Adjunct homeopathic support for ILD symptom relief and stability.' },
+  { iconIdentifier: '🧠', title: 'Counselling & Therapy', desc: 'Therapy sessions for stress, anxiety, sleep and emotional well-being.' },
+  { iconIdentifier: '🧘‍♂️', title: 'Wellness & Lifestyle', desc: 'Personalised plans blending diet, yoga and naturopathy with homeopathy.' },
 ];
 
 export default function Services() {
   return (
-    <section className="py-20 bg-slate-950" id="services">
+    <section className="py-20 bg-white" id="services">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-teal-400 text-sm font-semibold uppercase tracking-wider">Our Services</span>
-          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mt-2 text-slate-100">Comprehensive Treatments Under One Roof</h2>
-          <p className="text-slate-400 text-sm md:text-md mt-4">
+          <span className="text-teal-600 text-xs font-bold uppercase tracking-wider bg-teal-50 px-3 py-1 rounded-full border border-teal-100">
+            Our Services
+          </span>
+          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mt-3 text-slate-900 leading-tight">Comprehensive Treatments Under One Roof</h2>
+          <p className="text-slate-500 text-sm md:text-md mt-4">
             From chronic illness management to lifestyle therapy — we offer 12 specialized care modules rooted in classical homeopathy.
           </p>
         </div>
@@ -30,20 +33,20 @@ export default function Services() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((s) => (
             <article
-              className="bg-slate-900/30 border border-slate-800 rounded-2xl p-6 hover:border-slate-700/50 hover:shadow-lg hover:shadow-teal-500/5 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+              className="bg-slate-50 border border-slate-100 rounded-3xl p-6 hover:border-slate-200 hover:shadow-lg hover:shadow-teal-500/5 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between shadow-sm"
               key={s.title}
             >
               <div className="space-y-4">
-                <span className="text-3xl bg-slate-950 border border-slate-800 w-12 h-12 rounded-xl flex items-center justify-center" aria-hidden>
-                  {s.icon}
+                <span className="text-xl bg-white border border-slate-100 w-12 h-12 rounded-xl flex items-center justify-center shadow-inner" aria-hidden>
+                  {getTreatmentIcon(s.iconIdentifier)}
                 </span>
-                <h3 className="font-bold text-slate-200 text-sm md:text-md">{s.title}</h3>
-                <p className="text-slate-450 text-xs md:text-sm leading-relaxed">{s.desc}</p>
+                <h3 className="font-bold text-slate-800 text-sm md:text-md">{s.title}</h3>
+                <p className="text-slate-500 text-xs md:text-sm leading-relaxed font-semibold">{s.desc}</p>
               </div>
-              <div className="pt-4 mt-4 border-t border-slate-850">
+              <div className="pt-4 mt-4 border-t border-slate-100">
                 <a
-                  href="#appointment"
-                  className="text-teal-400 hover:text-teal-300 font-semibold text-xs flex items-center gap-1 transition-colors"
+                  href="/booking"
+                  className="text-teal-600 hover:text-teal-700 font-bold text-xs flex items-center gap-1 transition-colors"
                 >
                   Book treatment →
                 </a>

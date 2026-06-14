@@ -29,6 +29,9 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage.jsx'
 import ResetPasswordPage from './pages/ResetPasswordPage.jsx'
 import BlogPage from './pages/BlogPage.jsx'
 import BlogDetailPage from './pages/BlogDetailPage.jsx'
+import SuccessStoriesPage from './pages/SuccessStoriesPage.jsx'
+import ReviewsPage from './pages/ReviewsPage.jsx'
+import FreeConsultationPage from './pages/FreeConsultationPage.jsx'
 
 // Patient Dashboard
 import PatientLayout from './pages/patient/PatientLayout.jsx'
@@ -124,6 +127,9 @@ export default function App() {
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
         <Route path="/blogs" element={<BlogPage />} />
         <Route path="/blogs/:slug" element={<BlogDetailPage />} />
+        <Route path="/success-stories" element={<SuccessStoriesPage />} />
+        <Route path="/reviews" element={<ReviewsPage />} />
+        <Route path="/free-consultation" element={<FreeConsultationPage />} />
 
         {/* Patient Dashboard */}
         <Route 

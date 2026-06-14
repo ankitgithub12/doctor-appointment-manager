@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { doctorService } from '../api/services.js';
 import Loader from '../components/ui/Loader.jsx';
 import toast from 'react-hot-toast';
+import { FaAward, FaUserMd, FaCalendarAlt } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export default function DoctorsPage() {
   const [doctors, setDoctors] = useState([]);
@@ -25,18 +27,20 @@ export default function DoctorsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 pt-28 pb-16 relative overflow-hidden">
-      {/* Background glow glows */}
+    <div className="min-h-screen bg-slate-50 text-slate-800 pt-28 pb-16 relative overflow-hidden">
+      {/* Background glow elements */}
       <div className="absolute top-1/4 right-0 w-96 h-96 rounded-full bg-teal-500/5 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 left-0 w-96 h-96 rounded-full bg-blue-500/5 blur-[120px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-4 relative z-10">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-teal-400 text-sm font-semibold uppercase tracking-wider">Our Specialist Care Team</span>
-          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mt-2">
-            Meet Our Certified <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-500">Homeopathy Doctors</span>
+          <span className="text-teal-600 text-xs font-bold uppercase tracking-wider bg-teal-50 px-3 py-1 rounded-full border border-teal-100">
+            Our Specialist Care Team
+          </span>
+          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mt-3 text-slate-900 leading-tight">
+            Meet Our Certified <span className="text-teal-605">Homeopathy Doctors</span>
           </h1>
-          <p className="text-slate-400 text-md mt-4">
+          <p className="text-slate-500 text-sm md:text-md mt-4 font-medium">
             A dedicated medical panel of qualified, government-registered homeopaths committed to diagnosing and curing chronic conditions from the root.
           </p>
         </div>
@@ -49,44 +53,44 @@ export default function DoctorsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {doctors.map((d) => (
               <article
-                className="bg-slate-900/40 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between hover:border-slate-700/60 transition-all duration-200"
+                className="bg-white border border-slate-100 rounded-3xl p-6 flex flex-col justify-between hover:border-slate-200/80 hover:shadow-xl transition-all duration-350 shadow-md"
                 key={d._id}
               >
                 <div className="space-y-5">
                   <div className="flex gap-4 items-start">
-                    <div className="w-14 h-14 bg-teal-500/10 border border-teal-500/20 text-teal-400 font-extrabold flex items-center justify-center rounded-full text-xl flex-shrink-0">
+                    <div className="w-14 h-14 bg-teal-50 border border-teal-100 text-teal-605 font-black flex items-center justify-center rounded-full text-xl flex-shrink-0 shadow-inner">
                       {d.initials}
                     </div>
                     <div>
-                      <h3 className="text-lg font-bold text-slate-100">{d.name}</h3>
-                      <span className="text-xs text-teal-400 font-medium block mt-0.5">{d.title}</span>
-                      <span className="text-xs text-slate-400 block mt-0.5">{d.qualification}</span>
+                      <h3 className="text-base font-bold text-slate-800 leading-snug">{d.name}</h3>
+                      <span className="text-xs text-teal-600 font-bold block mt-0.5">{d.title}</span>
+                      <span className="text-xs text-slate-400 font-semibold block mt-0.5">{d.qualification}</span>
                     </div>
                   </div>
 
-                  <div className="border-t border-b border-slate-800/80 py-3 flex justify-between gap-4 text-center">
-                    <div className="flex-1 border-r border-slate-800/80">
-                      <strong className="text-lg font-bold text-slate-100 block">{d.experience}+ Yrs</strong>
-                      <span className="text-xs text-slate-500">Experience</span>
+                  <div className="border-t border-b border-slate-100 py-3.5 flex justify-between gap-4 text-center font-semibold text-xs">
+                    <div className="flex-1 border-r border-slate-100">
+                      <strong className="text-base font-black text-slate-800 block leading-tight">{d.experience}+ Yrs</strong>
+                      <span className="text-[10px] text-slate-400 font-bold uppercase mt-1">Experience</span>
                     </div>
                     <div className="flex-1">
-                      <strong className="text-lg font-bold text-slate-100 block">{d.certifications?.length || 0}</strong>
-                      <span className="text-xs text-slate-500">Certifications</span>
+                      <strong className="text-base font-black text-slate-800 block leading-tight">{d.certifications?.length || 0}</strong>
+                      <span className="text-[10px] text-slate-400 font-bold uppercase mt-1">Certifications</span>
                     </div>
                   </div>
 
                   <div>
-                    <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider">About specialist</h4>
-                    <p className="text-slate-400 text-sm mt-1.5 leading-relaxed">{d.bio}</p>
+                    <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">About Specialist</h4>
+                    <p className="text-slate-500 text-xs mt-1.5 leading-relaxed font-semibold h-16 overflow-hidden">{d.bio}</p>
                   </div>
 
                   {d.certifications?.length > 0 && (
                     <div>
-                      <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider">Accreditations</h4>
-                      <div className="flex flex-wrap gap-1.5 mt-2">
+                      <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Accreditations</h4>
+                      <div className="flex flex-wrap gap-1.5">
                         {d.certifications.map((c) => (
-                          <span key={c} className="text-xs bg-slate-850 text-slate-300 py-1 px-2.5 rounded-lg border border-slate-800">
-                            🏅 {c}
+                          <span key={c} className="text-[10px] bg-slate-50 text-slate-600 py-1 px-2.5 rounded-lg border border-slate-200/80 font-bold flex items-center gap-1">
+                            <FaAward className="text-teal-600 text-[11px]" /> {c}
                           </span>
                         ))}
                       </div>
@@ -95,10 +99,10 @@ export default function DoctorsPage() {
 
                   {d.expertise?.length > 0 && (
                     <div>
-                      <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider">Expertise Specialties</h4>
-                      <div className="flex flex-wrap gap-1.5 mt-2">
+                      <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Expertise Specialties</h4>
+                      <div className="flex flex-wrap gap-1.5">
                         {d.expertise.map((exp) => (
-                          <span key={exp} className="text-xs bg-teal-500/5 text-teal-400 py-1 px-2.5 rounded-lg border border-teal-500/10">
+                          <span key={exp} className="text-[10px] bg-teal-50 text-teal-700 py-1 px-2.5 rounded-lg border border-teal-100 font-bold">
                             {exp}
                           </span>
                         ))}
@@ -107,19 +111,21 @@ export default function DoctorsPage() {
                   )}
                 </div>
 
-                <div className="pt-6 mt-6 border-t border-slate-800/80">
-                  <a
-                    href="/#appointment"
-                    className="w-full bg-slate-800 hover:bg-teal-500 hover:text-slate-950 text-slate-200 border border-slate-700 hover:border-teal-500 font-semibold py-2.5 rounded-lg flex items-center justify-center transition-all duration-200 text-sm active:scale-[0.98]"
+                <div className="pt-6 mt-6 border-t border-slate-100">
+                  <Link
+                    to="/booking"
+                    className="w-full bg-teal-655 hover:bg-teal-700 text-white font-bold py-2.5 rounded-xl flex items-center justify-center transition-all duration-300 text-xs uppercase shadow active:scale-[0.98] gap-1.5"
                   >
-                    Schedule Booking
-                  </a>
+                    <FaCalendarAlt /> Schedule Booking
+                  </Link>
                 </div>
               </article>
             ))}
           </div>
         ) : (
-          <p className="text-slate-500 text-sm text-center py-12">No specialist doctors available at this time.</p>
+          <div className="text-center py-20 bg-white border border-slate-100 rounded-3xl shadow-sm">
+            <p className="text-slate-400 text-sm">No specialist doctors available at this time.</p>
+          </div>
         )}
       </div>
     </div>

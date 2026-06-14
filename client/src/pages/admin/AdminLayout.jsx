@@ -37,21 +37,21 @@ export default function AdminLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 pt-20">
+    <div className="min-h-screen bg-slate-55 text-slate-800 pt-20">
       {/* Mobile sidebar toggle */}
       <button
-        className="lg:hidden fixed top-24 left-4 z-50 w-10 h-10 bg-slate-900 border border-slate-800 rounded-lg flex items-center justify-center text-slate-300 hover:bg-slate-800 transition"
+        className="lg:hidden fixed top-24 left-4 z-50 w-10 h-10 bg-white border border-slate-200 rounded-lg flex items-center justify-center text-slate-700 hover:bg-slate-100 transition shadow"
         onClick={() => setSidebarOpen(!sidebarOpen)}
       >
         {sidebarOpen ? '✕' : '☰'}
       </button>
 
       {/* Sidebar */}
-      <aside className={`fixed top-20 left-0 h-[calc(100vh-5rem)] w-64 bg-slate-950 border-r border-slate-800/80 z-40 flex flex-col transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
+      <aside className={`fixed top-20 left-0 h-[calc(100vh-5rem)] w-64 bg-white border-r border-slate-100 z-40 flex flex-col transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 shadow-sm`}>
         {/* Brand */}
-        <div className="p-5 border-b border-slate-800/80">
-          <span className="text-xs text-teal-400 font-bold uppercase tracking-wider">Admin Panel</span>
-          <p className="text-sm text-slate-300 mt-1 truncate">{user?.name}</p>
+        <div className="p-5 border-b border-slate-100">
+          <span className="text-xs text-teal-650 font-bold uppercase tracking-wider">Admin Panel</span>
+          <p className="text-sm text-slate-800 font-bold mt-1 truncate">{user?.name}</p>
         </div>
 
         {/* Navigation */}
@@ -63,24 +63,24 @@ export default function AdminLayout() {
               end={link.end}
               onClick={() => setSidebarOpen(false)}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold transition-all duration-150 ${
+                `flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold transition-all duration-150 border ${
                   isActive
-                    ? 'bg-teal-500/10 text-teal-400 border border-teal-500/20'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/50 border border-transparent'
+                    ? 'bg-teal-50 border-teal-100 text-teal-655 shadow-sm'
+                    : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50 border-transparent'
                 }`
               }
             >
-              <span className="text-base">{link.icon}</span>
+              <span className="text-sm">{link.icon}</span>
               {link.label}
             </NavLink>
           ))}
         </nav>
 
         {/* Logout */}
-        <div className="p-3 border-t border-slate-800/80">
+        <div className="p-3 border-t border-slate-100">
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold text-rose-400 hover:bg-rose-500/10 transition"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold text-rose-500 hover:bg-rose-50/50 transition cursor-pointer"
           >
             <FaSignOutAlt /> Sign Out
           </button>
@@ -89,7 +89,7 @@ export default function AdminLayout() {
 
       {/* Mobile overlay */}
       {sidebarOpen && (
-        <div className="lg:hidden fixed inset-0 top-20 bg-slate-950/50 z-30" onClick={() => setSidebarOpen(false)} />
+        <div className="lg:hidden fixed inset-0 top-20 bg-slate-900/10 backdrop-blur-xs z-35" onClick={() => setSidebarOpen(false)} />
       )}
 
       {/* Main content */}

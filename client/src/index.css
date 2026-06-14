@@ -4,8 +4,8 @@
 @theme {
   --font-sans: "Plus Jakarta Sans", "Outfit", "Inter", sans-serif;
   
-  --color-slate-750: #1e293b;
-  --color-slate-850: #0f172a;
+  --color-slate-750: #e2e8f0;
+  --color-slate-850: #f8fafc;
   
   --color-teal-50: #f0fdfa;
   --color-teal-100: #ccfbf1;
@@ -13,7 +13,8 @@
   --color-teal-350: #5eead4;
   --color-teal-400: #2dd4bf;
   --color-teal-500: #14b8a6;
-  --color-teal-600: #0d9488;
+  --color-teal-605: #0d9488;
+  --color-teal-650: #0f766e;
   --color-teal-700: #0f766e;
   --color-teal-800: #115e59;
   --color-teal-900: #134e4a;
@@ -22,7 +23,7 @@
 
 @layer base {
   body {
-    @apply bg-slate-950 text-slate-100 font-sans antialiased selection:bg-teal-400 selection:text-slate-950 overflow-x-hidden scroll-smooth;
+    @apply bg-slate-50 text-slate-700 font-sans antialiased selection:bg-teal-600 selection:text-white overflow-x-hidden scroll-smooth;
   }
   
   /* Scrollbar styles */
@@ -30,17 +31,17 @@
     @apply w-2 h-2;
   }
   ::-webkit-scrollbar-track {
-    @apply bg-slate-950;
+    @apply bg-slate-100;
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-slate-800 rounded-full border-2 border-slate-950 hover:bg-slate-700 transition;
+    @apply bg-slate-300 rounded-full border-2 border-slate-100 hover:bg-slate-400 transition;
   }
 }
 
 /* Reveal transition classes */
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(20px);
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -51,24 +52,24 @@
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fadeIn {
-  animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Magnetic / hover glowing highlights */
+/* Premium card hover effects */
 .glow-card {
-  @apply relative overflow-hidden bg-slate-900/30 border border-slate-800 rounded-2xl transition-all duration-350;
+  @apply relative overflow-hidden bg-white border border-slate-100/80 rounded-3xl transition-all duration-300 shadow-sm shadow-slate-100/50;
 }
 
 .glow-card:hover {
-  @apply border-slate-750/70 shadow-lg shadow-teal-500/5 -translate-y-1;
+  @apply border-slate-200 shadow-xl shadow-teal-500/5 -translate-y-1;
 }
 
 /* Spinner */
 .spinner {
-  @apply animate-spin rounded-full h-4 w-4 border-2 border-slate-950/20 border-t-slate-950 inline-block align-middle mr-2;
+  @apply animate-spin rounded-full h-4 w-4 border-2 border-slate-200 border-t-teal-600 inline-block align-middle mr-2;
 }

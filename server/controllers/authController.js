@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import { User } from '../models/User.js';
+import { Doctor } from '../models/Doctor.js';
 import asyncHandler from '../utils/asyncHandler.js';
 import AppError from '../utils/apiError.js';
 import { sendPasswordResetEmail } from '../services/emailService.js';
@@ -17,7 +18,7 @@ const generateToken = (id) => {
 // @route   POST /api/auth/register
 // @access  Public
 export const register = asyncHandler(async (req, res) => {
-  const { name, email, password, phone } = req.body;
+  const { name, email, password, phone, role } = req.body;
 
   // Check if user already exists
   const userExists = await User.findOne({ email });
@@ -25,14 +26,39 @@ export const register = asyncHandler(async (req, res) => {
     throw new AppError('User already exists with this email', 400);
   }
 
+  const userRole = role || 'patient';
+
   // Create user
   const user = await User.create({
     name,
     email,
     password,
     phone,
-    role: 'patient', // default registration is patient
+    role: userRole,
   });
+
+  // If role is doctor, automatically create the linked Doctor document
+  if (userRole === 'doctor') {
+    const initials = name
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase()
+      .substring(0, 2) || 'MD';
+
+    await Doctor.create({
+      user: user._id,
+      name: user.name,
+      title: 'Consultant Doctor',
+      qualification: 'BHMS / MD (Homeopathy)',
+      experience: 1,
+      initials,
+      bio: `Dr. ${user.name} is a newly registered homeopathy consultant at HomeHub.`,
+      email: user.email,
+      phone: user.phone || '',
+      isActive: true,
+    });
+  }
 
   const token = generateToken(user._id);
 
