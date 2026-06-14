@@ -1,18 +1,20 @@
 # HomeHub Homeopathy Clinic & Management Portal
 
-HomeHub Homeopathy is a production-ready, full-stack MERN application for a clinical booking, patient dashboard, and administration management system. It is built using React (Vite) styled with Tailwind CSS v4 on the frontend, and Node.js (Express) with MongoDB on the backend.
+HomeHub Homeopathy is a production-ready, full-stack MERN application for a clinical booking, patient dashboard, doctor dashboard, and administration management system. It is built using React (Vite) styled with Tailwind CSS v4 on the frontend, and Node.js (Express) with MongoDB on the backend.
 
 ---
 
 ## Key Features
 
-- **Patient Portal & Authentication**: Secure registration and login using JWT. Patients can view upcoming appointments, booking history, and assigned homeopathic physician details.
-- **Interactive Booking Flow**: Real-time appointment scheduling and free callback consultation requests.
-- **Admin Dashboard**: Comprehensive administration panel to manage appointments (approve, mark complete, add clinical notes), CRUD operations on clinic doctors and treatment modules, review moderation, and callback queries.
-- **Clinical Specializations Directory**: Structured pages detailing treatments, symptoms, and healing timelines.
-- **Tailwind CSS v4 Aesthetic**: Modern glassmorphic theme with responsive layouts, hover states, and smooth transition animations.
-- **SEO & Search Optimization**: Unique meta tags, Open Graph card tags, sitemaps, and structured JSON-LD local medical business schemas.
-- **Security Protocols**: Armed with rate limiting, Helmet security headers, CORS protection, request parameter validations, and password crypt hashing.
+- **Multi-Role Dashboards**:
+  - **Patient Portal**: Profile management (gender, DOB, emergency contacts, avatar uploads), appointment history tracker, review star-rating form modals, and bulk notifications inbox.
+  - **Doctor Portal**: Availability hours scheduler, assigned appointment grids, review logs, patient history records, and profile bio setup.
+  - **Admin Panel**: Manage doctor listings, moderate reviews, review callback inquiries, read contact inbox messages, update appointments (statuses/notes), edit system configurations, and view analytic metrics.
+- **Media Uploads (Cloudinary Integration)**: Direct Cloudinary uploads using buffered memory storage streams via Multer, enabling optimized rendering of doctor photos, blog covers, and profile avatars.
+- **Interactive Booking Flow**: Standalone bookings component supporting calendar future-date validations, prefilled patient contacts, and physician pre-selections.
+- **Premium Aesthetic & React Icons**: Uses SVG primitives from the `react-icons/fa` library rather than emojis, featuring a dark-themed glassmorphism layout, consistent spacing, and custom micro-animations.
+- **SEO & Search Optimization**: Page metadata overrides using `react-helmet-async`, structured schema business JSON-LD objects, XML sitemaps, and robots restrictions.
+- **Production-grade Security**: Equipped with bcrypt hashing, `express-mongo-sanitize`, `xss-clean` HTML filters, Helmet response headers, CORS protection, and strict path rate-limiters.
 
 ---
 
@@ -22,13 +24,15 @@ HomeHub Homeopathy is a production-ready, full-stack MERN application for a clin
 - **Core Framework**: React 18 & Vite
 - **Styling**: Tailwind CSS v4
 - **Routing**: React Router Dom v6
-- **API Client**: Axios with automatic request/response token interceptors
+- **Icons**: React Icons (FontAwesome pack)
+- **API Client**: Axios with interceptors
 - **Notifications**: React Hot Toast
 
 ### Backend (Server)
 - **Runtime**: Node.js & Express
 - **Database**: MongoDB & Mongoose ODM
-- **Authentication**: JWT (JSON Web Tokens) with expiration
+- **Media Storage**: Cloudinary SDK
+- **File Uploads**: Multer memory storage
 - **Security & Logging**: Helmet, CORS, Express Rate Limit, Express Validator, Morgan, and BcryptJS
 
 ---
@@ -38,30 +42,43 @@ HomeHub Homeopathy is a production-ready, full-stack MERN application for a clin
 ```
 doctor-website/
 ├── client/                      # Frontend Application
-│   ├── public/                  # Robots.txt, sitemaps, static files
+│   ├── public/                  # Robots.txt, sitemap.xml, static assets
 │   ├── src/
-│   │   ├── api/                 # Axios configurations & service endpoints
-│   │   ├── components/          # Reusable UI primitives & layouts
-│   │   ├── context/             # Global Auth state context
-│   │   ├── pages/               # Page routing views (About, Contact, Admin, etc.)
-│   │   ├── App.jsx              # Routing mapping
-│   │   └── index.css            # Tailwind import & color scheme variables
+│   │   ├── api/                 # Axios configuration & services.js
+│   │   ├── components/          # Reusable UI primitives (Modal, Skeleton, Badges)
+│   │   ├── context/             # Global Auth state context (refreshUser support)
+│   │   ├── pages/               # Page routing views
+│   │   │   ├── admin/           # Admin layout & sub-pages (doctors, reviews, settings)
+│   │   │   ├── doctor/          # Doctor layout & sub-pages (availability, appointments)
+│   │   │   ├── patient/         # Patient layout & sub-pages (profile, reviews, alerts)
+│   │   │   ├── BookAppointmentPage.jsx
+│   │   │   ├── DoctorDetailPage.jsx
+│   │   │   ├── BlogPage.jsx
+│   │   │   └── ...
+│   │   ├── App.jsx              # Role-guarded routing tree mappings
+│   │   └── index.css            # Tailwind variables & global animations
 │   ├── vite.config.js
 │   └── package.json
 │
 ├── server/                      # Backend API Server
-│   ├── config/                  # Database connections
-│   ├── controllers/             # Endpoint action handlers
-│   ├── middleware/              # Auth sessions, validations, and error handlers
-│   ├── models/                  # Mongoose data schemas
-│   ├── routes/                  # Express routing files
+│   ├── config/                  # Database connection & Cloudinary setup
+│   ├── controllers/             # Endpoint action handlers (MVC Controllers)
+│   ├── middleware/              # Auth checks, sanitizers, limits, and error handlers
+│   ├── models/                  # Mongoose data schemas (MVC Models)
+│   ├── routes/                  # Express endpoints mappings (MVC Views)
 │   ├── seed/                    # Initial database populator scripts
-│   ├── server.js                # App entry point
+│   ├── services/                # Cloudinary uploads & SMTP email dispatch services
+│   ├── utils/                   # Standardized apiResponse and pagination helpers
+│   ├── validations/             # Express-validator schemas
+│   ├── server.js                # App entry bootstrap
+│   ├── app.js                   # Express application setup
+│   ├── .env                     # Server local env configuration
+│   ├── .gitignore               # Server-specific Git ignore paths
 │   └── package.json
 │
-├── .env                         # Root local environment variables (ignored in Git)
-├── .env.example                 # Reference environment variables
-└── .gitignore                   # Workspace files to ignore in Git
+├── .gitignore                   # Workspace Git ignore paths
+├── README.md                    # Project documentation
+└── ...
 ```
 
 ---
@@ -75,14 +92,36 @@ cd doctor-
 ```
 
 ### 2. Configure Environment Variables
-Copy `.env.example` at the root and rename it to `.env`:
+Create a `.env` file inside the `server/` directory:
 ```bash
-cp .env.example .env
+touch server/.env
 ```
-Fill in the configuration parameters inside the root `.env` file:
-- `MONGODB_URI`: Your MongoDB database connection string.
-- `JWT_SECRET`: A secure string used to sign user auth tokens.
-- `PORT`: Port the Express server will run on (Default: `5000`).
+Fill in the configuration parameters inside `server/.env`:
+```env
+NODE_ENV=development
+PORT=5000
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_token
+JWT_EXPIRE=7d
+CORS_ORIGIN=http://localhost:5173
+
+# Cloudinary Config
+CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+
+# Email Config (Optional for password reset)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your_email@gmail.com
+SMTP_PASSWORD=your_app_password
+FROM_EMAIL="HomeHub Homeopathy" <noreply@homehub.com>
+```
+
+Create a `.env` file inside the `client/` directory for VITE:
+```env
+VITE_API_URL=http://localhost:5000/api
+```
 
 ### 3. Install Dependencies
 Install dependencies for both frontend and backend directories:
