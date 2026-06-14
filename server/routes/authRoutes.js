@@ -1,27 +1,25 @@
 import express from 'express';
-import { body } from 'express-validator';
-import { register, login, getMe } from '../controllers/authController.js';
+import {
+  register, login, getMe, updateProfile, updatePassword,
+  forgotPassword, resetPassword,
+} from '../controllers/authController.js';
 import { protect } from '../middleware/auth.js';
 import { validateRequest } from '../middleware/validate.js';
 import { strictLimiter } from '../middleware/rateLimiter.js';
+import { upload } from '../middleware/upload.js';
+import {
+  registerValidation, loginValidation, updateProfileValidation,
+  updatePasswordValidation, forgotPasswordValidation, resetPasswordValidation,
+} from '../validations/authValidation.js';
 
 const router = express.Router();
-
-// Input validation rules
-const registerValidation = [
-  body('name', 'Name is required').notEmpty().trim(),
-  body('email', 'Please include a valid email').isEmail().normalizeEmail(),
-  body('password', 'Please enter a password with 6 or more characters').isLength({ min: 6 }),
-  body('phone').optional().trim(),
-];
-
-const loginValidation = [
-  body('email', 'Please include a valid email').isEmail().normalizeEmail(),
-  body('password', 'Password is required').exists(),
-];
 
 router.post('/register', strictLimiter, registerValidation, validateRequest, register);
 router.post('/login', strictLimiter, loginValidation, validateRequest, login);
 router.get('/me', protect, getMe);
+router.put('/profile', protect, upload.single('avatar'), updateProfileValidation, validateRequest, updateProfile);
+router.put('/password', protect, updatePasswordValidation, validateRequest, updatePassword);
+router.post('/forgot-password', strictLimiter, forgotPasswordValidation, validateRequest, forgotPassword);
+router.put('/reset-password/:resetToken', resetPasswordValidation, validateRequest, resetPassword);
 
 export default router;

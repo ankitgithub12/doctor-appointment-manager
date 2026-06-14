@@ -58,6 +58,18 @@ export default function Header() {
     navigate('/');
   };
 
+  const getDashboardLink = () => {
+    if (user?.role === 'admin') return '/admin';
+    if (user?.role === 'doctor') return '/doctor';
+    return '/dashboard';
+  };
+
+  const getDashboardLabel = () => {
+    if (user?.role === 'admin') return '⚙️ Admin Panel';
+    if (user?.role === 'doctor') return '🩺 Doctor Portal';
+    return '👤 Patient Portal';
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b ${
@@ -89,7 +101,7 @@ export default function Header() {
             </span>
           </span>
         </Link>
-
+ 
         {/* Desktop Nav Links */}
         <nav className="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-300">
           {links.map((l) => (
@@ -119,7 +131,7 @@ export default function Header() {
             Our Doctors
           </Link>
         </nav>
-
+ 
         {/* CTA Buttons */}
         <div className="hidden md:flex items-center gap-4">
           <a
@@ -128,7 +140,7 @@ export default function Header() {
           >
             📞 +91 98295 93852
           </a>
-
+ 
           {/* Conditional Auth widgets */}
           {isAuthenticated ? (
             <div className="relative">
@@ -139,7 +151,7 @@ export default function Header() {
               >
                 {user?.name?.substring(0, 2).toUpperCase() || 'US'}
               </button>
-
+ 
               {showDropdown && (
                 <div className="absolute right-0 mt-2.5 w-48 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl p-1.5 z-50 animate-fadeIn">
                   <div className="px-3.5 py-2 border-b border-slate-800/80 mb-1">
@@ -147,11 +159,11 @@ export default function Header() {
                     <span className="text-slate-200 text-sm font-semibold truncate block">{user?.name}</span>
                   </div>
                   <Link
-                    to={isAdmin ? '/admin' : '/dashboard'}
+                    to={getDashboardLink()}
                     onClick={() => setShowDropdown(false)}
                     className="w-full text-left block px-3.5 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-slate-100 text-xs font-semibold"
                   >
-                    {isAdmin ? '⚙️ Admin Panel' : '👤 Patient Portal'}
+                    {getDashboardLabel()}
                   </Link>
                   <button
                     onClick={handleLogout}
@@ -235,11 +247,11 @@ export default function Header() {
             {isAuthenticated ? (
               <div className="flex gap-2">
                 <Link
-                  to={isAdmin ? '/admin' : '/dashboard'}
+                  to={getDashboardLink()}
                   onClick={() => setOpen(false)}
                   className="flex-1 bg-teal-500/10 border border-teal-500/20 text-teal-400 text-center py-2.5 rounded-lg font-bold text-sm"
                 >
-                  {isAdmin ? '⚙️ Admin' : '👤 Dashboard'}
+                  {user?.role === 'admin' ? '⚙️ Admin' : user?.role === 'doctor' ? '🩺 Doctor' : '👤 Dashboard'}
                 </Link>
                 <button
                   onClick={() => {

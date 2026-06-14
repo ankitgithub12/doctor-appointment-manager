@@ -24,14 +24,28 @@ export const getAllReviews = async (req, res, next) => {
   }
 };
 
+// @desc    Get logged in user's reviews
+// @route   GET /api/reviews/my
+// @access  Private
+export const getMyReviews = async (req, res, next) => {
+  try {
+    const reviews = await Review.find({ user: req.user.id })
+      .populate('doctor', 'name specializations photo')
+      .sort({ createdAt: -1 });
+    res.status(200).json({ success: true, count: reviews.length, data: reviews });
+  } catch (error) {
+    next(error);
+  }
+};
+
 // @desc    Submit a new review
 // @route   POST /api/reviews
-// @access  Public
+// @access  Public/Private (Associates user if logged in)
 export const createReview = async (req, res, next) => {
-  const { patientName, condition, rating, text, initials, videoUrl } = req.body;
+  const { patientName, condition, rating, text, initials, videoUrl, doctorId } = req.body;
 
   try {
-    const review = await Review.create({
+    const reviewData = {
       patientName,
       condition,
       rating,
@@ -39,7 +53,17 @@ export const createReview = async (req, res, next) => {
       initials,
       videoUrl,
       isApproved: false, // Moderated by default
-    });
+    };
+
+    if (req.user) {
+      reviewData.user = req.user.id;
+    }
+
+    if (doctorId) {
+      reviewData.doctor = doctorId;
+    }
+
+    const review = await Review.create(reviewData);
 
     res.status(201).json({
       success: true,

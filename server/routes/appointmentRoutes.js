@@ -34,6 +34,6 @@ router.route('/:id')
   .delete(protect, authorize('admin'), deleteAppointment);
 
 router.route('/:id/status')
-  .patch(protect, authorize('admin'), updateAppointmentStatus);
+  .patch(protect, updateAppointmentStatus);
 
 export default router;

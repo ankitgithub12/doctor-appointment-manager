@@ -5,23 +5,44 @@ export const authService = {
   register: (userData) => axiosClient.post('/auth/register', userData),
   login: (credentials) => axiosClient.post('/auth/login', credentials),
   getMe: () => axiosClient.get('/auth/me'),
+  updateProfile: (formData) => axiosClient.put('/auth/profile', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  }),
+  updatePassword: (data) => axiosClient.put('/auth/password', data),
+  forgotPassword: (email) => axiosClient.post('/auth/forgot-password', { email }),
+  resetPassword: (token, password) => axiosClient.put(`/auth/reset-password/${token}`, { password }),
+};
+
+// Users API (Admin)
+export const userService = {
+  getUsers: (params) => axiosClient.get('/users', { params }),
+  getUser: (id) => axiosClient.get(`/users/${id}`),
+  updateUser: (id, data) => axiosClient.put(`/users/${id}`, data),
+  deleteUser: (id) => axiosClient.delete(`/users/${id}`),
+  toggleActive: (id) => axiosClient.patch(`/users/${id}/toggle-active`),
 };
 
 // Doctors API
 export const doctorService = {
-  getDoctors: () => axiosClient.get('/doctors'),
+  getDoctors: (params) => axiosClient.get('/doctors', { params }),
   getDoctor: (id) => axiosClient.get(`/doctors/${id}`),
-  createDoctor: (doctorData) => axiosClient.post('/doctors', doctorData),
-  updateDoctor: (id, doctorData) => axiosClient.put(`/doctors/${id}`, doctorData),
+  createDoctor: (formData) => axiosClient.post('/doctors', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  }),
+  updateDoctor: (id, formData) => axiosClient.put(`/doctors/${id}`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  }),
   deleteDoctor: (id) => axiosClient.delete(`/doctors/${id}`),
+  getDoctorAppointments: (id, params) => axiosClient.get(`/doctors/${id}/appointments`, { params }),
+  updateAvailability: (id, data) => axiosClient.put(`/doctors/${id}/availability`, data),
 };
 
 // Appointments API
 export const appointmentService = {
-  createAppointment: (appointmentData) => axiosClient.post('/appointments', appointmentData),
-  getAppointments: () => axiosClient.get('/appointments'),
-  getMyAppointments: () => axiosClient.get('/appointments/my'),
-  updateStatus: (id, statusData) => axiosClient.patch(`/appointments/${id}/status`, statusData),
+  createAppointment: (data) => axiosClient.post('/appointments', data),
+  getAppointments: (params) => axiosClient.get('/appointments', { params }),
+  getMyAppointments: (params) => axiosClient.get('/appointments/my', { params }),
+  updateStatus: (id, data) => axiosClient.patch(`/appointments/${id}/status`, data),
   deleteAppointment: (id) => axiosClient.delete(`/appointments/${id}`),
 };
 
@@ -29,32 +50,33 @@ export const appointmentService = {
 export const treatmentService = {
   getTreatments: () => axiosClient.get('/treatments'),
   getTreatment: (slug) => axiosClient.get(`/treatments/${slug}`),
-  createTreatment: (treatmentData) => axiosClient.post('/treatments', treatmentData),
-  updateTreatment: (id, treatmentData) => axiosClient.put(`/treatments/id/${id}`, treatmentData),
+  createTreatment: (data) => axiosClient.post('/treatments', data),
+  updateTreatment: (id, data) => axiosClient.put(`/treatments/id/${id}`, data),
   deleteTreatment: (id) => axiosClient.delete(`/treatments/id/${id}`),
 };
 
 // Reviews API
 export const reviewService = {
   getReviews: () => axiosClient.get('/reviews'),
-  getAllReviews: () => axiosClient.get('/reviews/all'),
-  createReview: (reviewData) => axiosClient.post('/reviews', reviewData),
+  getMyReviews: (params) => axiosClient.get('/reviews/my', { params }),
+  getAllReviews: (params) => axiosClient.get('/reviews/all', { params }),
+  createReview: (data) => axiosClient.post('/reviews', data),
   approveReview: (id, isApproved) => axiosClient.patch(`/reviews/${id}/approve`, { isApproved }),
   deleteReview: (id) => axiosClient.delete(`/reviews/${id}`),
 };
 
 // Consultations API
 export const consultationService = {
-  createConsultation: (consultationData) => axiosClient.post('/consultations', consultationData),
-  getConsultations: () => axiosClient.get('/consultations'),
+  createConsultation: (data) => axiosClient.post('/consultations', data),
+  getConsultations: (params) => axiosClient.get('/consultations', { params }),
   updateStatus: (id, status) => axiosClient.patch(`/consultations/${id}/status`, { status }),
   deleteConsultation: (id) => axiosClient.delete(`/consultations/${id}`),
 };
 
 // Contact Messages API
 export const contactService = {
-  createContact: (contactData) => axiosClient.post('/contact', contactData),
-  getContacts: () => axiosClient.get('/contact'),
+  createContact: (data) => axiosClient.post('/contact', data),
+  getContacts: (params) => axiosClient.get('/contact', { params }),
   markAsRead: (id, isRead) => axiosClient.patch(`/contact/${id}/read`, { isRead }),
   deleteContact: (id) => axiosClient.delete(`/contact/${id}`),
 };
@@ -62,12 +84,57 @@ export const contactService = {
 // Success Stories API
 export const storyService = {
   getSuccessStories: () => axiosClient.get('/stories'),
-  createStory: (storyData) => axiosClient.post('/stories', storyData),
-  updateStory: (id, storyData) => axiosClient.put(`/stories/${id}`, storyData),
+  createStory: (data) => axiosClient.post('/stories', data),
+  updateStory: (id, data) => axiosClient.put(`/stories/${id}`, data),
   deleteStory: (id) => axiosClient.delete(`/stories/${id}`),
 };
 
 // Dashboard Stats API
 export const statsService = {
   getDashboardStats: () => axiosClient.get('/stats/dashboard'),
+};
+
+// Notifications API
+export const notificationService = {
+  getNotifications: (params) => axiosClient.get('/notifications', { params }),
+  getUnreadCount: () => axiosClient.get('/notifications/unread-count'),
+  markAsRead: (id) => axiosClient.patch(`/notifications/${id}/read`),
+  markAllAsRead: () => axiosClient.patch('/notifications/read-all'),
+  deleteNotification: (id) => axiosClient.delete(`/notifications/${id}`),
+};
+
+// Blogs API
+export const blogService = {
+  getBlogs: (params) => axiosClient.get('/blogs', { params }),
+  getAllBlogs: (params) => axiosClient.get('/blogs/all', { params }),
+  getBlog: (slug) => axiosClient.get(`/blogs/${slug}`),
+  createBlog: (formData) => axiosClient.post('/blogs', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  }),
+  updateBlog: (id, formData) => axiosClient.put(`/blogs/id/${id}`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  }),
+  deleteBlog: (id) => axiosClient.delete(`/blogs/id/${id}`),
+};
+
+// Specializations API
+export const specializationService = {
+  getSpecializations: () => axiosClient.get('/specializations'),
+  getAllSpecializations: () => axiosClient.get('/specializations/all'),
+  createSpecialization: (data) => axiosClient.post('/specializations', data),
+  updateSpecialization: (id, data) => axiosClient.put(`/specializations/${id}`, data),
+  deleteSpecialization: (id) => axiosClient.delete(`/specializations/${id}`),
+};
+
+// Upload API
+export const uploadService = {
+  uploadDoctorPhoto: (formData) => axiosClient.post('/upload/doctor-photo', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  }),
+  uploadBlogCover: (formData) => axiosClient.post('/upload/blog-cover', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  }),
+  uploadAvatar: (formData) => axiosClient.post('/upload/avatar', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  }),
 };

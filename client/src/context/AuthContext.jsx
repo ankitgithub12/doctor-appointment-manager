@@ -82,10 +82,24 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   };
 
+  // Refresh/Load user profile
+  const refreshUser = async () => {
+    if (!token) return;
+    try {
+      const response = await authService.getMe();
+      if (response?.success) {
+        setUser(response.user);
+      }
+    } catch (error) {
+      console.error('Failed to refresh user:', error);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
         user,
+        setUser,
         token,
         loading,
         isAuthenticated: !!user,
@@ -93,6 +107,7 @@ export const AuthProvider = ({ children }) => {
         login,
         register,
         logout,
+        refreshUser,
       }}
     >
       {children}

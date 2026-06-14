@@ -42,6 +42,11 @@ const appointmentSchema = new mongoose.Schema(
       ref: 'Doctor',
       required: [true, 'Please assign a doctor'],
     },
+    appointmentType: {
+      type: String,
+      enum: ['in-person', 'online', 'callback'],
+      default: 'in-person',
+    },
     status: {
       type: String,
       enum: ['pending', 'confirmed', 'completed', 'cancelled'],
@@ -51,10 +56,27 @@ const appointmentSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    prescription: {
+      type: String,
+      trim: true,
+    },
+    followUpDate: {
+      type: Date,
+    },
+    cancelReason: {
+      type: String,
+      trim: true,
+    },
   },
   {
     timestamps: true,
   }
 );
+
+// Indexes
+appointmentSchema.index({ user: 1, status: 1 });
+appointmentSchema.index({ doctor: 1, status: 1 });
+appointmentSchema.index({ preferredDate: 1 });
+appointmentSchema.index({ status: 1 });
 
 export const Appointment = mongoose.model('Appointment', appointmentSchema);

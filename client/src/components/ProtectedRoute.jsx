@@ -2,8 +2,8 @@ import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import Loader from './ui/Loader.jsx'; // We'll create this UI component shortly
 
-export const ProtectedRoute = ({ children, adminOnly = false }) => {
-  const { user, loading, isAuthenticated, isAdmin } = useAuth();
+export const ProtectedRoute = ({ children, allowedRoles = [] }) => {
+  const { user, loading, isAuthenticated } = useAuth();
 
   if (loading) {
     return (
@@ -18,9 +18,11 @@ export const ProtectedRoute = ({ children, adminOnly = false }) => {
     return <Navigate to="/login" replace />;
   }
 
-  if (adminOnly && !isAdmin) {
-    // Redirect to home if not admin but trying to access admin route
-    return <Navigate to="/" replace />;
+  if (allowedRoles.length > 0 && !allowedRoles.includes(user?.role)) {
+    // Redirect to appropriate landing page if role not allowed
+    if (user.role === 'admin') return <Navigate to="/admin" replace />;
+    if (user.role === 'doctor') return <Navigate to="/doctor" replace />;
+    return <Navigate to="/dashboard" replace />;
   }
 
   return children;

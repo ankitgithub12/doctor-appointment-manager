@@ -6,8 +6,9 @@ import {
   createReview,
   approveReview,
   deleteReview,
+  getMyReviews,
 } from '../controllers/reviewController.js';
-import { protect, authorize } from '../middleware/auth.js';
+import { protect, authorize, optionalProtect } from '../middleware/auth.js';
 import { validateRequest } from '../middleware/validate.js';
 import { strictLimiter } from '../middleware/rateLimiter.js';
 
@@ -24,7 +25,10 @@ const reviewValidation = [
 
 router.route('/')
   .get(getReviews)
-  .post(strictLimiter, reviewValidation, validateRequest, createReview);
+  .post(strictLimiter, optionalProtect, reviewValidation, validateRequest, createReview);
+
+router.route('/my')
+  .get(protect, getMyReviews);
 
 router.route('/all')
   .get(protect, authorize('admin'), getAllReviews);

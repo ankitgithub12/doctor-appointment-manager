@@ -74,7 +74,7 @@ export const getMyAppointments = async (req, res, next) => {
 
 // @desc    Update appointment status
 // @route   PATCH /api/appointments/:id/status
-// @access  Private/Admin
+// @access  Private
 export const updateAppointmentStatus = async (req, res, next) => {
   const { status, notes } = req.body;
 
@@ -90,9 +90,19 @@ export const updateAppointmentStatus = async (req, res, next) => {
       return res.status(400).json({ success: false, message: 'Invalid status value' });
     }
 
+    // Auth check: non-admins can only cancel their own appointments
+    if (req.user.role !== 'admin') {
+      if (!appointment.user || appointment.user.toString() !== req.user.id.toString()) {
+        return res.status(403).json({ success: false, message: 'Not authorized to modify this appointment' });
+      }
+      if (status !== 'cancelled') {
+        return res.status(400).json({ success: false, message: 'Patients can only cancel appointments' });
+      }
+    }
+
     const updateFields = {};
     if (status) updateFields.status = status;
-    if (notes !== undefined) updateFields.notes = notes;
+    if (notes !== undefined && req.user.role === 'admin') updateFields.notes = notes;
 
     appointment = await Appointment.findByIdAndUpdate(req.params.id, updateFields, {
       new: true,
