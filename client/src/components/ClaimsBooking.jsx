@@ -1,14 +1,70 @@
 import React, { useState, useEffect } from 'react';
 import { doctorService, appointmentService } from '../api/services.js';
 import toast from 'react-hot-toast';
+import {
+  FaLeaf,
+  FaShieldAlt,
+  FaBullseye,
+  FaUserMd,
+  FaClipboardList,
+  FaLaptopMedical
+} from 'react-icons/fa';
 
 const claims = [
-  { icon: '🌿', title: '100% Natural Treatment', desc: 'Plant & mineral based medicines with zero chemicals or steroids.' },
-  { icon: '🛡️', title: 'No Side Effects', desc: 'Gentle and safe for infants, pregnant women and the elderly alike.' },
-  { icon: '🎯', title: 'Root-Cause Cure', desc: 'We treat the underlying cause for lasting relief, not temporary suppression.' },
-  { icon: '👨‍⚕️', title: 'Expert Doctors', desc: 'BHMS & MD certified specialists with 12+ years of clinical experience.' },
-  { icon: '📋', title: 'Personalised Plans', desc: 'Every protocol is tailored to your unique body, history and lifestyle.' },
-  { icon: '💻', title: 'Online Consultation', desc: 'Consult from home — medicines delivered to your doorstep across India.' },
+  {
+    icon: FaLeaf,
+    title: '100% Natural Treatment',
+    desc: 'Plant & mineral based medicines with zero chemicals or steroids.',
+    color: 'text-emerald-400',
+    bgColor: 'bg-emerald-500/10 border-emerald-500/20',
+    borderColor: 'hover:border-emerald-500/35',
+    shadowColor: 'hover:shadow-emerald-500/5'
+  },
+  {
+    icon: FaShieldAlt,
+    title: 'No Side Effects',
+    desc: 'Gentle and safe for infants, pregnant women and the elderly alike.',
+    color: 'text-cyan-400',
+    bgColor: 'bg-cyan-500/10 border-cyan-500/20',
+    borderColor: 'hover:border-cyan-500/35',
+    shadowColor: 'hover:shadow-cyan-500/5'
+  },
+  {
+    icon: FaBullseye,
+    title: 'Root-Cause Cure',
+    desc: 'We treat the underlying cause for lasting relief, not temporary suppression.',
+    color: 'text-rose-400',
+    bgColor: 'bg-rose-500/10 border-rose-500/20',
+    borderColor: 'hover:border-rose-500/35',
+    shadowColor: 'hover:shadow-rose-500/5'
+  },
+  {
+    icon: FaUserMd,
+    title: 'Expert Doctors',
+    desc: 'BHMS & MD certified specialists with 12+ years of clinical experience.',
+    color: 'text-teal-400',
+    bgColor: 'bg-teal-500/10 border-teal-500/20',
+    borderColor: 'hover:border-teal-500/35',
+    shadowColor: 'hover:shadow-teal-500/5'
+  },
+  {
+    icon: FaClipboardList,
+    title: 'Personalised Plans',
+    desc: 'Every protocol is tailored to your unique body, history and lifestyle.',
+    color: 'text-amber-400',
+    bgColor: 'bg-amber-500/10 border-amber-500/20',
+    borderColor: 'hover:border-amber-500/35',
+    shadowColor: 'hover:shadow-amber-500/5'
+  },
+  {
+    icon: FaLaptopMedical,
+    title: 'Online Consultation',
+    desc: 'Consult from home — medicines delivered to your doorstep across India.',
+    color: 'text-violet-400',
+    bgColor: 'bg-violet-500/10 border-violet-500/20',
+    borderColor: 'hover:border-violet-500/35',
+    shadowColor: 'hover:shadow-violet-500/5'
+  },
 ];
 
 export default function ClaimsBooking() {
@@ -99,13 +155,25 @@ export default function ClaimsBooking() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           {/* Claims List */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {claims.map((c) => (
-              <div className="bg-slate-900/30 border border-slate-800/80 rounded-2xl p-5 hover:border-slate-700/50 transition-all duration-200" key={c.title}>
-                <span className="text-3xl bg-slate-950 border border-slate-800 w-12 h-12 rounded-xl flex items-center justify-center mb-4" aria-hidden>{c.icon}</span>
-                <h4 className="font-bold text-slate-200 text-sm">{c.title}</h4>
-                <p className="text-slate-400 text-xs mt-2 leading-relaxed">{c.desc}</p>
-              </div>
-            ))}
+            {claims.map((c) => {
+              const IconComponent = c.icon;
+              return (
+                <div
+                  className={`group relative bg-slate-900/15 border border-slate-800/60 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:bg-slate-900/40 hover:shadow-xl ${c.borderColor} ${c.shadowColor}`}
+                  key={c.title}
+                >
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 border transition-colors duration-300 ${c.bgColor}`} aria-hidden="true">
+                    <IconComponent className={`text-xl transition-transform duration-300 group-hover:scale-110 ${c.color}`} />
+                  </div>
+                  <h4 className="font-bold text-slate-100 text-sm tracking-wide transition-colors duration-300 group-hover:text-white">
+                    {c.title}
+                  </h4>
+                  <p className="text-slate-400 text-xs mt-2.5 leading-relaxed font-light">
+                    {c.desc}
+                  </p>
+                </div>
+              );
+            })}
           </div>
 
           {/* Booking Card */}

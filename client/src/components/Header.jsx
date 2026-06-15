@@ -89,7 +89,7 @@ export default function Header() {
             <Link
               key={l.path}
               to={l.path}
-              className={`hover:text-teal-600 transition-colors duration-150 ${
+              className={`hover:text-teal-600 transition-colors duration-150 whitespace-nowrap ${
                 location.pathname === l.path ? 'text-teal-650 font-bold border-b-2 border-teal-500 pb-1' : ''
               }`}
             >
@@ -98,7 +98,7 @@ export default function Header() {
           ))}
           <Link
             to="/treatments"
-            className={`hover:text-teal-605 transition-colors duration-150 ${
+            className={`hover:text-teal-605 transition-colors duration-150 whitespace-nowrap ${
               location.pathname === '/treatments' ? 'text-teal-650 font-bold border-b-2 border-teal-500 pb-1' : ''
             }`}
           >
@@ -108,12 +108,6 @@ export default function Header() {
  
         {/* CTA Buttons */}
         <div className="hidden md:flex items-center gap-4">
-          <a
-            href="tel:+919829593852"
-            className="text-slate-600 hover:text-teal-650 text-xs font-bold font-mono tracking-wider transition-colors flex items-center gap-1.5"
-          >
-            <FaPhoneAlt className="text-teal-600 text-[10px]" /> +91 98295 93852
-          </a>
  
           {/* Conditional Auth widgets */}
           {isAuthenticated ? (
@@ -205,12 +199,6 @@ export default function Header() {
           </nav>
 
           <div className="flex flex-col gap-4 pt-6 border-t border-slate-100">
-            <a
-              href="tel:+919829593852"
-              className="text-slate-600 hover:text-teal-600 font-bold font-mono tracking-wider text-center flex items-center justify-center gap-1.5"
-            >
-              <FaPhoneAlt className="text-teal-605 text-xs" /> +91 98295 93852
-            </a>
             
             {isAuthenticated ? (
               <div className="flex flex-col gap-2">
