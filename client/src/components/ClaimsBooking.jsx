@@ -15,55 +15,55 @@ const claims = [
     icon: FaLeaf,
     title: '100% Natural Treatment',
     desc: 'Plant & mineral based medicines with zero chemicals or steroids.',
-    color: 'text-emerald-400',
-    bgColor: 'bg-emerald-500/10 border-emerald-500/20',
-    borderColor: 'hover:border-emerald-500/35',
-    shadowColor: 'hover:shadow-emerald-500/5'
+    color: 'text-emerald-600',
+    bgColor: 'bg-emerald-50 border-emerald-100/70',
+    borderColor: 'hover:border-emerald-200',
+    shadowColor: 'hover:shadow-lg hover:shadow-emerald-500/5'
   },
   {
     icon: FaShieldAlt,
     title: 'No Side Effects',
     desc: 'Gentle and safe for infants, pregnant women and the elderly alike.',
-    color: 'text-cyan-400',
-    bgColor: 'bg-cyan-500/10 border-cyan-500/20',
-    borderColor: 'hover:border-cyan-500/35',
-    shadowColor: 'hover:shadow-cyan-500/5'
+    color: 'text-cyan-600',
+    bgColor: 'bg-cyan-50 border-cyan-100/70',
+    borderColor: 'hover:border-cyan-200',
+    shadowColor: 'hover:shadow-lg hover:shadow-cyan-500/5'
   },
   {
     icon: FaBullseye,
     title: 'Root-Cause Cure',
     desc: 'We treat the underlying cause for lasting relief, not temporary suppression.',
-    color: 'text-rose-400',
-    bgColor: 'bg-rose-500/10 border-rose-500/20',
-    borderColor: 'hover:border-rose-500/35',
-    shadowColor: 'hover:shadow-rose-500/5'
+    color: 'text-rose-600',
+    bgColor: 'bg-rose-50 border-rose-100/70',
+    borderColor: 'hover:border-rose-200',
+    shadowColor: 'hover:shadow-lg hover:shadow-rose-500/5'
   },
   {
     icon: FaUserMd,
     title: 'Expert Doctors',
     desc: 'BHMS & MD certified specialists with 12+ years of clinical experience.',
-    color: 'text-teal-400',
-    bgColor: 'bg-teal-500/10 border-teal-500/20',
-    borderColor: 'hover:border-teal-500/35',
-    shadowColor: 'hover:shadow-teal-500/5'
+    color: 'text-teal-600',
+    bgColor: 'bg-teal-50 border-teal-100/70',
+    borderColor: 'hover:border-teal-200',
+    shadowColor: 'hover:shadow-lg hover:shadow-teal-500/5'
   },
   {
     icon: FaClipboardList,
     title: 'Personalised Plans',
     desc: 'Every protocol is tailored to your unique body, history and lifestyle.',
-    color: 'text-amber-400',
-    bgColor: 'bg-amber-500/10 border-amber-500/20',
-    borderColor: 'hover:border-amber-500/35',
-    shadowColor: 'hover:shadow-amber-500/5'
+    color: 'text-amber-600',
+    bgColor: 'bg-amber-50 border-amber-100/70',
+    borderColor: 'hover:border-amber-200',
+    shadowColor: 'hover:shadow-lg hover:shadow-amber-500/5'
   },
   {
     icon: FaLaptopMedical,
     title: 'Online Consultation',
     desc: 'Consult from home — medicines delivered to your doorstep across India.',
-    color: 'text-violet-400',
-    bgColor: 'bg-violet-500/10 border-violet-500/20',
-    borderColor: 'hover:border-violet-500/35',
-    shadowColor: 'hover:shadow-violet-500/5'
+    color: 'text-violet-600',
+    bgColor: 'bg-violet-50 border-violet-100/70',
+    borderColor: 'hover:border-violet-200',
+    shadowColor: 'hover:shadow-lg hover:shadow-violet-500/5'
   },
 ];
 
@@ -142,12 +142,12 @@ export default function ClaimsBooking() {
   };
 
   return (
-    <section className="py-20 bg-slate-950" id="appointment">
+    <section className="py-20 bg-slate-50/20" id="appointment">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-teal-400 text-sm font-semibold uppercase tracking-wider">Why Patients Trust Us</span>
-          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mt-2 text-slate-100">Proven Benefits, Backed by Results</h2>
-          <p className="text-slate-400 text-sm md:text-md mt-4">
+          <span className="text-teal-650 text-sm font-semibold uppercase tracking-wider">Why Patients Trust Us</span>
+          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mt-2 text-slate-800">Proven Benefits, Backed by Results</h2>
+          <p className="text-slate-500 text-sm md:text-md mt-4 font-light">
             A safer, smarter path to recovery — select your specialist and schedule your consultation in under a minute.
           </p>
         </div>
@@ -159,16 +159,16 @@ export default function ClaimsBooking() {
               const IconComponent = c.icon;
               return (
                 <div
-                  className={`group relative bg-slate-900/15 border border-slate-800/60 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:bg-slate-900/40 hover:shadow-xl ${c.borderColor} ${c.shadowColor}`}
+                  className={`group relative bg-white border border-slate-100 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:bg-white hover:shadow-xl hover:shadow-slate-100/70 ${c.borderColor} ${c.shadowColor}`}
                   key={c.title}
                 >
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 border transition-colors duration-300 ${c.bgColor}`} aria-hidden="true">
                     <IconComponent className={`text-xl transition-transform duration-300 group-hover:scale-110 ${c.color}`} />
                   </div>
-                  <h4 className="font-bold text-slate-100 text-sm tracking-wide transition-colors duration-300 group-hover:text-white">
+                  <h4 className="font-bold text-slate-800 text-sm tracking-wide transition-colors duration-300 group-hover:text-slate-900">
                     {c.title}
                   </h4>
-                  <p className="text-slate-400 text-xs mt-2.5 leading-relaxed font-light">
+                  <p className="text-slate-500 text-xs mt-2.5 leading-relaxed font-light">
                     {c.desc}
                   </p>
                 </div>
@@ -177,24 +177,24 @@ export default function ClaimsBooking() {
           </div>
 
           {/* Booking Card */}
-          <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-6 md:p-8 backdrop-blur-md relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-teal-500/5 blur-[80px] pointer-events-none" />
+          <div className="bg-white border border-slate-100 rounded-3xl p-6 md:p-8 shadow-xl shadow-slate-100/60 relative overflow-hidden backdrop-blur-md">
+            <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-teal-500/3 blur-[80px] pointer-events-none" />
 
             {status === 'sent' ? (
               <div className="text-center py-10 space-y-6 relative z-10 animate-fadeIn">
-                <div className="w-16 h-16 bg-teal-500/10 border border-teal-500/20 text-teal-400 text-3xl font-bold rounded-full flex items-center justify-center mx-auto">
+                <div className="w-16 h-16 bg-teal-50 border border-teal-100 text-teal-600 text-3xl font-bold rounded-full flex items-center justify-center mx-auto shadow-inner">
                   ✓
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-slate-100">Appointment Requested!</h3>
-                  <p className="text-slate-400 text-sm mt-2 max-w-xs mx-auto">
+                  <h3 className="text-xl font-bold text-slate-800">Appointment Requested!</h3>
+                  <p className="text-slate-500 text-sm mt-2 max-w-xs mx-auto">
                     Thank you — our care team will contact you within 24 hours to confirm your scheduled slot.
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={handleReset}
-                  className="w-full bg-slate-800 hover:bg-slate-750 text-slate-200 border border-slate-700 font-semibold py-2.5 rounded-xl transition text-sm active:scale-[0.98]"
+                  className="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 rounded-xl border border-slate-200 shadow-sm active:scale-[0.98] transition-all cursor-pointer text-sm"
                 >
                   Book Another Appointment
                 </button>
@@ -202,13 +202,13 @@ export default function ClaimsBooking() {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
                 <div>
-                  <h3 className="text-lg font-bold text-slate-100">Book Your Appointment</h3>
-                  <p className="text-slate-400 text-xs mt-1">Fill out the clinical form to allocate slot consultations.</p>
+                  <h3 className="text-lg font-bold text-slate-800">Book Your Appointment</h3>
+                  <p className="text-slate-500 text-xs mt-1">Fill out the clinical form to allocate slot consultations.</p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="patient-name" className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
+                    <label htmlFor="patient-name" className="block text-xs font-bold text-slate-650 tracking-wider mb-1.5">
                       Full Name *
                     </label>
                     <input
@@ -216,13 +216,13 @@ export default function ClaimsBooking() {
                       type="text"
                       required
                       placeholder="e.g. Riya Sharma"
-                      className="w-full bg-slate-950/80 border border-slate-800 rounded-lg py-2 px-3 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500/10 transition"
+                      className="w-full bg-white border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-850 placeholder-slate-400 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10 transition"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                     />
                   </div>
                   <div>
-                    <label htmlFor="patient-phone" className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
+                    <label htmlFor="patient-phone" className="block text-xs font-bold text-slate-655 tracking-wider mb-1.5">
                       Mobile Number *
                     </label>
                     <input
@@ -231,7 +231,7 @@ export default function ClaimsBooking() {
                       required
                       pattern="[0-9+ ]{10,15}"
                       placeholder="+91 98765 43210"
-                      className="w-full bg-slate-950/80 border border-slate-800 rounded-lg py-2 px-3 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500/10 transition"
+                      className="w-full bg-white border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-850 placeholder-slate-400 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10 transition"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                     />
@@ -239,7 +239,7 @@ export default function ClaimsBooking() {
                 </div>
 
                 <div>
-                  <label htmlFor="patient-email" className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
+                  <label htmlFor="patient-email" className="block text-xs font-bold text-slate-650 tracking-wider mb-1.5">
                     Email Address *
                   </label>
                   <input
@@ -247,7 +247,7 @@ export default function ClaimsBooking() {
                     type="email"
                     required
                     placeholder="riya@example.com"
-                    className="w-full bg-slate-950/80 border border-slate-800 rounded-lg py-2 px-3 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500/10 transition"
+                    className="w-full bg-white border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-850 placeholder-slate-400 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10 transition"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
@@ -255,26 +255,26 @@ export default function ClaimsBooking() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="pref-date" className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
+                    <label htmlFor="pref-date" className="block text-xs font-bold text-slate-650 tracking-wider mb-1.5">
                       Preferred Date *
                     </label>
                     <input
                       id="pref-date"
                       type="date"
                       required
-                      className="w-full bg-slate-950/80 border border-slate-800 rounded-lg py-2 px-3 text-sm text-slate-100 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500/10 transition"
+                      className="w-full bg-white border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-850 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10 transition"
                       value={preferredDate}
                       onChange={(e) => setPreferredDate(e.target.value)}
                     />
                   </div>
                   <div>
-                    <label htmlFor="pref-time" className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
+                    <label htmlFor="pref-time" className="block text-xs font-bold text-slate-650 tracking-wider mb-1.5">
                       Preferred Time Slot *
                     </label>
                     <select
                       id="pref-time"
                       required
-                      className="w-full bg-slate-950/80 border border-slate-800 rounded-lg py-2 px-3 text-sm text-slate-300 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500/10 transition"
+                      className="w-full bg-white border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-700 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10 transition"
                       value={preferredTime}
                       onChange={(e) => setPreferredTime(e.target.value)}
                     >
@@ -290,13 +290,13 @@ export default function ClaimsBooking() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="health-concern" className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
+                    <label htmlFor="health-concern" className="block text-xs font-bold text-slate-655 tracking-wider mb-1.5">
                       Health Concern *
                     </label>
                     <select
                       id="health-concern"
                       required
-                      className="w-full bg-slate-950/80 border border-slate-800 rounded-lg py-2 px-3 text-sm text-slate-300 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500/10 transition"
+                      className="w-full bg-white border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-700 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10 transition"
                       value={healthConcern}
                       onChange={(e) => setHealthConcern(e.target.value)}
                     >
@@ -311,13 +311,13 @@ export default function ClaimsBooking() {
                     </select>
                   </div>
                   <div>
-                    <label htmlFor="assigned-doctor" className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
+                    <label htmlFor="assigned-doctor" className="block text-xs font-bold text-slate-655 tracking-wider mb-1.5">
                       Assign Doctor *
                     </label>
                     <select
                       id="assigned-doctor"
                       required
-                      className="w-full bg-slate-950/80 border border-slate-800 rounded-lg py-2 px-3 text-sm text-slate-300 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500/10 transition"
+                      className="w-full bg-white border border-slate-200 rounded-xl py-2 px-3 text-sm text-slate-700 focus:outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10 transition"
                       value={selectedDoctor}
                       onChange={(e) => setSelectedDoctor(e.target.value)}
                     >
@@ -330,7 +330,7 @@ export default function ClaimsBooking() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-2 pt-2 text-xs text-slate-400">
+                <div className="flex items-start gap-2 pt-2 text-xs text-slate-500">
                   <input id="aterms" type="checkbox" required className="mt-0.5" />
                   <label htmlFor="aterms">
                     I agree to the Terms of Service and authorize HomeHub to contact me regarding my booking.
@@ -341,10 +341,10 @@ export default function ClaimsBooking() {
                   <button
                     type="submit"
                     disabled={status === 'sending'}
-                    className="w-full bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold py-3 px-4 rounded-xl flex items-center justify-center transition hover:shadow-lg hover:shadow-teal-500/10 active:scale-[0.98] disabled:opacity-50"
+                    className="w-full bg-teal-650 hover:bg-teal-700 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center transition hover:shadow-lg hover:shadow-teal-500/25 active:scale-[0.98] disabled:opacity-50"
                   >
                     {status === 'sending' ? (
-                      <span className="w-5 h-5 border-2 border-slate-950/20 border-t-slate-950 rounded-full animate-spin" />
+                      <span className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
                     ) : (
                       'Confirm My Appointment'
                     )}

@@ -34,9 +34,9 @@ function useCountUp(target, start, { duration = 1400, decimals = 0 } = {}) {
 function Stat({ stat, start }) {
   const display = useCountUp(stat.num, start, { decimals: stat.decimals || 0 });
   return (
-    <div className="text-center p-4 border-slate-800 border-b last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0">
-      <span className="block text-3xl md:text-4xl font-black text-teal-400 tracking-tight">{display}{stat.suffix}</span>
-      <span className="block text-xs uppercase tracking-wider text-slate-500 font-bold mt-2">{stat.label}</span>
+    <div className="text-center p-4 border-slate-100 border-b last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0">
+      <span className="block text-3xl md:text-4xl font-black text-teal-600 tracking-tight">{display}{stat.suffix}</span>
+      <span className="block text-xs uppercase tracking-wider text-slate-550 font-bold mt-2">{stat.label}</span>
     </div>
   );
 }
@@ -44,7 +44,7 @@ function Stat({ stat, start }) {
 export default function Stats() {
   const [ref, inView] = useInView({ threshold: 0.4 });
   return (
-    <section className="bg-slate-950/40 border-t border-b border-slate-900 py-8" ref={ref}>
+    <section className="bg-slate-50/50 border-t border-b border-slate-100 py-8" ref={ref}>
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 items-center">
           {stats.map((s) => (
