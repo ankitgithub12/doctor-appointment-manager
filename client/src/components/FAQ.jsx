@@ -29,12 +29,12 @@ const faqs = [
 
 export default function FAQ() {
   return (
-    <section className="py-20 bg-slate-900/10">
+    <section className="py-20 bg-white">
       <div className="max-w-4xl mx-auto px-4">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-teal-400 text-sm font-semibold uppercase tracking-wider">Questions Answered</span>
-          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mt-2 text-slate-100 font-sans">Frequently Asked Questions</h2>
-          <p className="text-slate-400 text-sm md:text-md mt-4">
+          <span className="text-teal-600 text-xs font-bold uppercase tracking-wider bg-teal-50 px-3 py-1 rounded-full border border-teal-100">Questions Answered</span>
+          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mt-2 text-slate-800 font-sans">Frequently Asked Questions</h2>
+          <p className="text-slate-500 text-sm md:text-md mt-4">
             Everything you wanted to ask about homeopathy, dosages, dietary restrictions, and our clinical approach.
           </p>
         </div>
@@ -42,19 +42,19 @@ export default function FAQ() {
         <div className="space-y-4">
           {faqs.map((f, i) => (
             <details
-              className="group bg-slate-900/35 border border-slate-800/80 rounded-2xl p-5 [&_summary::-webkit-details-marker]:hidden transition-all duration-300"
+              className="group bg-white border border-slate-200 rounded-2xl p-5 [&_summary::-webkit-details-marker]:hidden transition-all duration-300 hover:border-teal-500 shadow-sm"
               key={f.q}
               open={i === 0}
             >
               <summary className="flex items-center justify-between cursor-pointer focus:outline-none">
-                <h3 className="text-sm md:text-md font-bold text-slate-200 group-hover:text-teal-400 transition-colors pr-4">
+                <h3 className="text-sm md:text-md font-bold text-slate-800 group-hover:text-teal-600 transition-colors pr-4">
                   {f.q}
                 </h3>
                 <span className="relative flex-shrink-0 ml-1.5 w-5 h-5 text-slate-500 font-bold transition group-open:rotate-45">
                   ＋
                 </span>
               </summary>
-              <div className="text-slate-400 text-xs md:text-sm mt-3 pt-3 border-t border-slate-800/60 leading-relaxed font-sans">
+              <div className="text-slate-600 text-xs md:text-sm mt-3 pt-3 border-t border-slate-100 leading-relaxed font-sans">
                 {f.a}
               </div>
             </details>

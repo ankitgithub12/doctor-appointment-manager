@@ -55,8 +55,8 @@ export default function Header() {
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b ${
         scrolled
-          ? 'bg-white/90 backdrop-blur-md border-slate-100 shadow-md shadow-slate-100/50'
-          : 'bg-transparent border-transparent'
+          ? 'bg-blue-600 border-blue-700 shadow-md shadow-blue-800/10'
+          : 'bg-blue-600/95 border-blue-700/30'
       }`}
     >
       <div className="max-w-6xl mx-auto px-4 h-20 flex items-center justify-between gap-4">
@@ -70,27 +70,27 @@ export default function Header() {
           className="flex items-center gap-2 group"
           aria-label="HomeHub Homeopathy Home"
         >
-          <span className="w-10 h-10 rounded-xl bg-teal-600 text-white font-black flex items-center justify-center text-lg shadow-lg shadow-teal-500/20 group-hover:scale-[1.03] transition-transform">
+          <span className="w-10 h-10 rounded-xl bg-white text-blue-600 font-black flex items-center justify-center text-lg shadow-md group-hover:scale-[1.03] transition-transform">
             H
           </span>
-          <span className="leading-tight">
-            <span className="font-extrabold text-slate-800 text-md block group-hover:text-teal-600 transition-colors">
-              HomeHub <span className="font-light text-slate-400">Homeopathy</span>
+          <span className="leading-tight text-white">
+            <span className="font-extrabold text-white text-md block group-hover:text-blue-100 transition-colors">
+              HomeHub <span className="font-light text-blue-100">Homeopathy</span>
             </span>
-            <span className="text-[10px] text-slate-400 block tracking-wider uppercase font-bold">
+            <span className="text-[10px] text-blue-200 block tracking-wider uppercase font-bold">
               Safe • Natural • Root Cure
             </span>
           </span>
         </Link>
  
         {/* Desktop Nav Links */}
-        <nav className="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-600">
+        <nav className="hidden md:flex items-center gap-6 text-sm font-semibold text-blue-100">
           {links.map((l) => (
             <Link
               key={l.path}
               to={l.path}
-              className={`hover:text-teal-600 transition-colors duration-150 whitespace-nowrap ${
-                location.pathname === l.path ? 'text-teal-650 font-bold border-b-2 border-teal-500 pb-1' : ''
+              className={`hover:text-white transition-colors duration-150 whitespace-nowrap ${
+                location.pathname === l.path ? 'text-white font-bold border-b-2 border-teal-400 pb-1' : ''
               }`}
             >
               {l.label}
@@ -98,8 +98,8 @@ export default function Header() {
           ))}
           <Link
             to="/treatments"
-            className={`hover:text-teal-605 transition-colors duration-150 whitespace-nowrap ${
-              location.pathname === '/treatments' ? 'text-teal-650 font-bold border-b-2 border-teal-500 pb-1' : ''
+            className={`hover:text-white transition-colors duration-150 whitespace-nowrap ${
+              location.pathname === '/treatments' ? 'text-white font-bold border-b-2 border-teal-400 pb-1' : ''
             }`}
           >
             Treatments
@@ -114,7 +114,7 @@ export default function Header() {
             <div className="relative">
               <button
                 onClick={() => setShowDropdown(!showDropdown)}
-                className="w-9 h-9 rounded-full bg-teal-50 border border-teal-100 text-teal-600 text-xs font-black flex items-center justify-center cursor-pointer transition hover:bg-teal-100"
+                className="w-9 h-9 rounded-full bg-blue-750 border border-blue-500 text-white text-xs font-black flex items-center justify-center cursor-pointer transition hover:bg-blue-800"
                 aria-label="User Profile"
               >
                 {user?.name?.substring(0, 2).toUpperCase() || 'US'}
@@ -147,7 +147,7 @@ export default function Header() {
           ) : (
             <Link
               to="/login"
-              className="bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-bold px-4 py-2 rounded-lg text-xs transition"
+              className="bg-transparent hover:bg-blue-700 border border-white text-white font-bold px-4 py-2 rounded-lg text-xs transition"
             >
               Sign In
             </Link>
@@ -163,7 +163,7 @@ export default function Header() {
 
         {/* Mobile toggle button */}
         <button
-          className="md:hidden w-10 h-10 border border-slate-200 rounded-lg text-slate-700 flex items-center justify-center hover:bg-slate-50 transition cursor-pointer"
+          className="md:hidden w-10 h-10 border border-blue-500 rounded-lg text-white flex items-center justify-center hover:bg-blue-700 transition cursor-pointer"
           aria-label="Toggle navigation drawer"
           onClick={() => setOpen(!open)}
         >
@@ -174,17 +174,17 @@ export default function Header() {
       {/* Mobile Drawer Overlay */}
       {open && (
         <div
-          className="md:hidden fixed inset-0 top-20 bg-white/95 backdrop-blur-md z-45 flex flex-col p-6 space-y-6 animate-fadeIn"
+          className="md:hidden fixed inset-0 top-20 bg-blue-600 z-45 flex flex-col p-6 space-y-6 animate-fadeIn"
           role="dialog"
           aria-modal="true"
         >
-          <nav className="flex flex-col gap-4 text-md font-bold text-slate-700">
+          <nav className="flex flex-col gap-4 text-md font-bold text-white">
             {links.map((l) => (
               <Link
                 key={l.path}
                 to={l.path}
                 onClick={() => setOpen(false)}
-                className="hover:text-teal-605 border-b border-slate-100 pb-2 flex items-center justify-between"
+                className="hover:text-teal-200 border-b border-blue-500 pb-2 flex items-center justify-between"
               >
                 <span>{l.label}</span>
               </Link>
@@ -192,20 +192,20 @@ export default function Header() {
             <Link
               to="/treatments"
               onClick={() => setOpen(false)}
-              className="hover:text-teal-605 border-b border-slate-100 pb-2"
+              className="hover:text-teal-200 border-b border-blue-500 pb-2"
             >
               Treatments
             </Link>
           </nav>
 
-          <div className="flex flex-col gap-4 pt-6 border-t border-slate-100">
+          <div className="flex flex-col gap-4 pt-6 border-t border-blue-500">
             
             {isAuthenticated ? (
               <div className="flex flex-col gap-2">
                 <Link
                   to={getDashboardLink()}
                   onClick={() => setOpen(false)}
-                  className="w-full bg-teal-50 border border-teal-100 text-teal-650 text-center py-2.5 rounded-lg font-bold text-sm flex items-center justify-center gap-2"
+                  className="w-full bg-blue-700 border border-blue-500 text-white text-center py-2.5 rounded-lg font-bold text-sm flex items-center justify-center gap-2"
                 >
                   {getDashboardIcon()}
                   {getDashboardLabel()}
@@ -215,7 +215,7 @@ export default function Header() {
                     setOpen(false);
                     handleLogout();
                   }}
-                  className="w-full bg-slate-100 hover:bg-slate-200 text-rose-500 py-2.5 rounded-lg font-bold text-sm flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full bg-blue-700 hover:bg-blue-800 text-rose-300 py-2.5 rounded-lg font-bold text-sm flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <FaSignOutAlt />
                   Sign Out
@@ -225,7 +225,7 @@ export default function Header() {
               <Link
                 to="/login"
                 onClick={() => setOpen(false)}
-                className="w-full bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 text-center py-2.5 rounded-lg font-bold text-sm"
+                className="w-full bg-blue-700 hover:bg-blue-800 border border-blue-500 text-white text-center py-2.5 rounded-lg font-bold text-sm"
               >
                 Sign In
               </Link>

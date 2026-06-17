@@ -6,7 +6,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-white border-t border-slate-100/80 pt-16 pb-8 text-sm text-slate-500">
+    <footer className="bg-slate-900 border-t border-slate-800 pt-16 pb-8 text-sm text-white/80">
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Brand & Socials */}
@@ -16,15 +16,15 @@ export default function Footer() {
                 H
               </span>
               <span className="leading-tight">
-                <span className="font-bold text-slate-800 text-sm block">
-                  HomeHub <span className="font-light text-slate-400">Homeopathy</span>
+                <span className="font-bold text-white text-sm block">
+                  HomeHub <span className="font-light text-white/70">Homeopathy</span>
                 </span>
-                <span className="text-[9px] text-slate-400 block uppercase tracking-wider font-bold">
+                <span className="text-[9px] text-white/50 block uppercase tracking-wider font-bold">
                   Safe • Natural • Root Cure
                 </span>
               </span>
             </div>
-            <p className="text-slate-500 leading-relaxed text-xs">
+            <p className="text-white/60 leading-relaxed text-xs">
               A trusted family homeopathy clinic in Jaipur, Rajasthan, dedicated to compassionate, safe care and constitutional root-cause healing.
             </p>
             <div className="flex gap-3 pt-2" aria-label="Social media links">
@@ -32,7 +32,7 @@ export default function Footer() {
                 href="https://www.youtube.com/@homehubhomeopathy"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-lg bg-slate-50 border border-slate-200 text-slate-400 hover:text-teal-600 hover:border-teal-500/30 flex items-center justify-center transition-all"
+                className="w-8 h-8 rounded-lg bg-slate-950 border border-slate-800 text-white/60 hover:text-teal-600 hover:border-teal-500/30 flex items-center justify-center transition-all"
                 aria-label="YouTube Channel"
               >
                 <FaYoutube size={14} />
@@ -41,7 +41,7 @@ export default function Footer() {
                 href="https://www.linkedin.com/company/homehubhomeopathy"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-lg bg-slate-50 border border-slate-200 text-slate-400 hover:text-teal-600 hover:border-teal-500/30 flex items-center justify-center transition-all"
+                className="w-8 h-8 rounded-lg bg-slate-950 border border-slate-800 text-white/60 hover:text-teal-600 hover:border-teal-500/30 flex items-center justify-center transition-all"
                 aria-label="LinkedIn Profile"
               >
                 <FaLinkedin size={14} />
@@ -50,7 +50,7 @@ export default function Footer() {
                 href="https://www.instagram.com/homehubhomeopathy"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-lg bg-slate-50 border border-slate-200 text-slate-400 hover:text-teal-600 hover:border-teal-500/30 flex items-center justify-center transition-all"
+                className="w-8 h-8 rounded-lg bg-slate-950 border border-slate-800 text-white/60 hover:text-teal-600 hover:border-teal-500/30 flex items-center justify-center transition-all"
                 aria-label="Instagram Profile"
               >
                 <FaInstagram size={14} />
@@ -59,7 +59,7 @@ export default function Footer() {
                 href="https://wa.me/919829593852"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-lg bg-slate-50 border border-slate-200 text-slate-400 hover:text-teal-600 hover:border-teal-500/30 flex items-center justify-center transition-all"
+                className="w-8 h-8 rounded-lg bg-slate-950 border border-slate-800 text-white/60 hover:text-teal-600 hover:border-teal-500/30 flex items-center justify-center transition-all"
                 aria-label="WhatsApp Chat Support"
               >
                 <FaWhatsapp size={14} />
@@ -69,7 +69,7 @@ export default function Footer() {
 
           {/* Navigation Links */}
           <div className="space-y-4">
-            <h4 className="text-slate-800 font-bold tracking-wider uppercase text-xs">Explore Site</h4>
+            <h4 className="text-white font-bold tracking-wider uppercase text-xs">Explore Site</h4>
             <ul className="space-y-2 text-xs">
               <li>
                 <Link to="/success-stories" className="hover:text-teal-600 font-semibold transition-colors">
@@ -101,7 +101,7 @@ export default function Footer() {
 
           {/* Quick Treatments */}
           <div className="space-y-4">
-            <h4 className="text-slate-800 font-bold tracking-wider uppercase text-xs">Homeo Treatments</h4>
+            <h4 className="text-white font-bold tracking-wider uppercase text-xs">Homeo Treatments</h4>
             <ul className="space-y-2 text-xs">
               <li>
                 <Link to="/treatments/diabetic-management" className="hover:text-teal-600 font-semibold transition-colors">
@@ -133,8 +133,8 @@ export default function Footer() {
 
           {/* Clinic details */}
           <div className="space-y-4">
-            <h4 className="text-slate-800 font-bold tracking-wider uppercase text-xs">Contact Desk</h4>
-            <ul className="space-y-2.5 text-xs text-slate-500">
+            <h4 className="text-white font-bold tracking-wider uppercase text-xs">Contact Desk</h4>
+            <ul className="space-y-2.5 text-xs text-white/60">
               <li className="leading-relaxed font-semibold">
                 102, Apex Mall, Lalkothi, Jaipur, Rajasthan 302015
               </li>
@@ -145,10 +145,10 @@ export default function Footer() {
               </li>
               <li>
                 <a href="mailto:care@homehubhomeopathy.com" className="hover:text-teal-600 font-bold transition-colors flex items-center gap-1.5">
-                  <FaEnvelope className="text-teal-605" /> care@homehubhomeopathy.com
+                  <FaEnvelope className="text-teal-600" /> care@homehubhomeopathy.com
                 </a>
               </li>
-              <li className="font-semibold text-slate-400">
+              <li className="font-semibold text-white/40">
                 Mon – Sat • 9:00 AM – 8:00 PM
               </li>
             </ul>
@@ -156,11 +156,11 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-slate-100 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-400 font-semibold">
+        <div className="border-t border-slate-800 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-white/40 font-semibold">
           <p>© {year} HomeHub Homeopathy Clinic. All rights reserved.</p>
           <div className="flex gap-4">
-            <Link to="/privacy" className="hover:text-slate-600 transition-colors">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-slate-600 transition-colors">Terms of Service</Link>
+            <Link to="/privacy" className="hover:text-white/60 transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-white/60 transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>

@@ -142,7 +142,7 @@ export default function ClaimsBooking() {
   };
 
   return (
-    <section className="py-20 bg-slate-50/20" id="appointment">
+    <section className="py-20 bg-slate-50" id="appointment">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <span className="text-teal-650 text-sm font-semibold uppercase tracking-wider">Why Patients Trust Us</span>

@@ -4,21 +4,62 @@
 @theme {
   --font-sans: "Plus Jakarta Sans", "Outfit", "Inter", sans-serif;
   
-  --color-slate-750: #e2e8f0;
-  --color-slate-850: #f8fafc;
+  /* Primary Foundation */
+  --color-slate-50: #E8F4F2;       /* Light Teal Background instead of Grey */
+  --color-slate-100: #D0DDE8;      /* Border/Divider */
+  --color-slate-150: #D0DDE8;
+  --color-slate-200: #D0DDE8;      /* Border/Divider */
+  --color-slate-250: #D0DDE8;
+  --color-slate-300: #B0C4D6;      /* Slightly darker border for hierarchy */
+  --color-slate-350: #B0C4D6;
+  --color-slate-400: #5A738E;      /* Muted text on dark background / placeholder */
+  --color-slate-450: #2C3E50;      /* Darker text color */
+  --color-slate-500: #2C3E50;      /* High contrast dark text on light backgrounds */
+  --color-slate-550: #2C3E50;      /* High contrast dark text on light backgrounds */
+  --color-slate-600: #1A2A3A;      /* Deepest dark text */
+  --color-slate-655: #1A2A3A;      /* Deepest dark text */
+  --color-slate-700: #1A2A3A;      /* Deepest dark text */
+  --color-slate-750: #D0DDE8;      /* Mapped to Border/Divider */
+  --color-slate-800: #1A2A3A;      /* Deepest dark text */
+  --color-slate-850: #1A2A3A;      /* Deepest dark text */
+  --color-slate-900: #1A2A3A;      /* Deepest dark text / Dark Backgrounds */
+  --color-slate-905: #00A896;      /* Special class from Doctors.jsx maps to CTA */
+  --color-slate-950: #101A24;      /* Deepest dark background shade matching hierarchy */
+
+  /* Secondary Accent */
+  --color-teal-50: #E8F4F2;        /* Light Teal Background */
+  --color-teal-100: #E8F4F2;
+  --color-teal-200: #D0DDE8;
+  --color-teal-350: #00A896;
+  --color-teal-400: #00A896;
+  --color-teal-450: #00A896;
+  --color-teal-500: #00A896;       /* Teal/Green Accent */
+  --color-teal-550: #00A896;
+  --color-teal-600: #00A896;
+  --color-teal-605: #00A896;
+  --color-teal-650: #00A896;
+  --color-teal-655: #00A896;
+  --color-teal-700: #00877A;       /* Button Hover State / Darker Teal */
+  --color-teal-800: #00877A;
+  --color-teal-900: #00877A;
+  --color-teal-950: #00877A;
+
+  /* Primary Blue */
+  --color-blue-50: #E8F4F2;
+  --color-blue-100: #D0DDE8;
+  --color-blue-200: #D0DDE8;
+  --color-blue-500: #005EB8;       /* Primary Blue */
+  --color-blue-600: #005EB8;
+  --color-blue-700: #005EB8;
+  --color-blue-800: #005EB8;
+
+  /* Supporting Colors */
+  --color-emerald-500: #2E9B5E;    /* Success/Confirmation */
+  --color-emerald-600: #2E9B5E;
+  --color-emerald-700: #2E9B5E;
   
-  --color-teal-50: #f0fdfa;
-  --color-teal-100: #ccfbf1;
-  --color-teal-200: #99f6e4;
-  --color-teal-350: #5eead4;
-  --color-teal-400: #2dd4bf;
-  --color-teal-500: #14b8a6;
-  --color-teal-605: #0d9488;
-  --color-teal-650: #0f766e;
-  --color-teal-700: #0f766e;
-  --color-teal-800: #115e59;
-  --color-teal-900: #134e4a;
-  --color-teal-950: #042f2e;
+  --color-amber-500: #F4A261;      /* Testimonial Stars / Warning Alert */
+  --color-amber-600: #F4A261;
 }
 
 @layer base {

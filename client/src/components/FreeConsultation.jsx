@@ -42,7 +42,7 @@ export default function FreeConsultation() {
   };
 
   return (
-    <section className="py-20 bg-slate-50/40" id="free-consultation">
+    <section className="py-20 bg-slate-50" id="free-consultation">
       <div className="max-w-6xl mx-auto px-4">
         <div className="bg-white border border-slate-100 rounded-3xl p-8 md:p-12 shadow-xl shadow-slate-100/50 backdrop-blur-md grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative overflow-hidden">
           {/* Glowing subtle light teal element */}

@@ -18,7 +18,7 @@ const services = [
 
 export default function Services() {
   return (
-    <section className="py-20 bg-white" id="services">
+    <section className="py-20 bg-slate-50" id="services">
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <span className="text-teal-600 text-xs font-bold uppercase tracking-wider bg-teal-50 px-3 py-1 rounded-full border border-teal-100">
@@ -33,17 +33,17 @@ export default function Services() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((s) => (
             <article
-              className="bg-slate-50 border border-slate-100 rounded-3xl p-6 hover:border-slate-200 hover:shadow-lg hover:shadow-teal-500/5 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between shadow-sm"
+              className="bg-white border border-slate-200 rounded-3xl p-6 hover:border-teal-500 hover:shadow-lg hover:shadow-teal-500/5 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between shadow-sm"
               key={s.title}
             >
               <div className="space-y-4">
-                <span className="text-xl bg-white border border-slate-100 w-12 h-12 rounded-xl flex items-center justify-center shadow-inner" aria-hidden>
+                <span className="text-xl bg-slate-50 border border-slate-200 w-12 h-12 rounded-xl flex items-center justify-center shadow-inner" aria-hidden>
                   {getTreatmentIcon(s.iconIdentifier)}
                 </span>
                 <h3 className="font-bold text-slate-800 text-sm md:text-md">{s.title}</h3>
                 <p className="text-slate-500 text-xs md:text-sm leading-relaxed font-semibold">{s.desc}</p>
               </div>
-              <div className="pt-4 mt-4 border-t border-slate-100">
+              <div className="pt-4 mt-4 border-t border-slate-200">
                 <a
                   href="/booking"
                   className="text-teal-600 hover:text-teal-700 font-bold text-xs flex items-center gap-1 transition-colors"

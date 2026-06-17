@@ -461,10 +461,10 @@ export default function Treatments() {
       </section>
 
       {/* CTA section */}
-      <section className="mt-16 bg-white border-t border-b border-slate-100 py-16 text-center">
+      <section className="mt-16 bg-blue-600 border-t border-b border-blue-750 py-16 text-center text-white">
         <div className="max-w-2xl mx-auto px-4 space-y-4">
-          <h2 className="text-2xl font-extrabold tracking-tight text-slate-900">Still Have Questions About Your Condition?</h2>
-          <p className="text-slate-500 text-sm leading-relaxed font-semibold">
+          <h2 className="text-2xl font-extrabold tracking-tight text-white">Still Have Questions About Your Condition?</h2>
+          <p className="text-white/80 text-sm leading-relaxed font-semibold">
             Talk to a certified homeopathy specialist today — your initial consult slot is completely free.
           </p>
           <div className="flex gap-3 justify-center pt-4">
@@ -476,7 +476,7 @@ export default function Treatments() {
             </Link>
             <a
               href="tel:+919829593852"
-              className="bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 font-bold py-2.5 px-6 rounded-xl transition text-xs uppercase flex items-center gap-1.5 cursor-pointer"
+              className="bg-transparent hover:bg-white/10 border border-white text-white font-bold py-2.5 px-6 rounded-xl transition text-xs uppercase flex items-center gap-1.5 cursor-pointer"
             >
               <FaPhoneAlt /> Call Now
             </a>

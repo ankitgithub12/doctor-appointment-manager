@@ -44,7 +44,7 @@ function Stat({ stat, start }) {
 export default function Stats() {
   const [ref, inView] = useInView({ threshold: 0.4 });
   return (
-    <section className="bg-slate-50/50 border-t border-b border-slate-100 py-8" ref={ref}>
+    <section className="bg-slate-50 border-t border-b border-slate-200 py-8" ref={ref}>
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 items-center">
           {stats.map((s) => (
