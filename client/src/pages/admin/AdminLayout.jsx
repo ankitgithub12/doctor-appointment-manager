@@ -37,7 +37,7 @@ export default function AdminLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-55 text-slate-800 pt-20">
+    <div className="min-h-screen bg-slate-50 text-slate-800 pt-20">
       {/* Mobile sidebar toggle */}
       <button
         className="lg:hidden fixed top-24 left-4 z-50 w-10 h-10 bg-white border border-slate-200 rounded-lg flex items-center justify-center text-slate-700 hover:bg-slate-100 transition shadow"
@@ -50,7 +50,7 @@ export default function AdminLayout() {
       <aside className={`fixed top-20 left-0 h-[calc(100vh-5rem)] w-64 bg-white border-r border-slate-100 z-40 flex flex-col transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 shadow-sm`}>
         {/* Brand */}
         <div className="p-5 border-b border-slate-100">
-          <span className="text-xs text-teal-650 font-bold uppercase tracking-wider">Admin Panel</span>
+          <span className="text-xs text-teal-600 font-bold uppercase tracking-wider">Admin Panel</span>
           <p className="text-sm text-slate-800 font-bold mt-1 truncate">{user?.name}</p>
         </div>
 
@@ -65,7 +65,7 @@ export default function AdminLayout() {
               className={({ isActive }) =>
                 `flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold transition-all duration-150 border ${
                   isActive
-                    ? 'bg-teal-50 border-teal-100 text-teal-655 shadow-sm'
+                    ? 'bg-teal-50 border-teal-100 text-teal-600 shadow-sm'
                     : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50 border-transparent'
                 }`
               }

@@ -42,7 +42,7 @@ export default function BlogDetailPage() {
     if (hasHtml) {
       return (
         <div 
-          className="prose prose-invert prose-teal max-w-none text-slate-350 text-sm md:text-base leading-relaxed space-y-4"
+          className="prose prose-teal max-w-none text-slate-600 text-sm md:text-base leading-relaxed space-y-4"
           dangerouslySetInnerHTML={{ __html: content }} 
         />
       );
@@ -50,7 +50,7 @@ export default function BlogDetailPage() {
 
     // Otherwise split by double newlines into paragraph blocks
     return (
-      <div className="space-y-5 text-slate-300 text-sm md:text-base leading-relaxed">
+      <div className="space-y-5 text-slate-600 text-sm md:text-base leading-relaxed">
         {content.split('\n\n').map((para, i) => (
           <p key={i}>
             {para.split('\n').map((line, j) => (
@@ -67,7 +67,7 @@ export default function BlogDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-55 text-slate-800 flex items-center justify-center">
         <Loader size="lg" />
       </div>
     );
@@ -75,10 +75,10 @@ export default function BlogDetailPage() {
 
   if (!blog) {
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-center space-y-4">
+      <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col items-center justify-center space-y-4">
         <span className="text-4xl">🔎</span>
         <h2 className="text-xl font-bold">Article Not Found</h2>
-        <Link to="/blogs" className="bg-teal-500 text-slate-950 px-4 py-2 rounded-lg font-semibold text-sm">
+        <Link to="/blogs" className="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2.5 rounded-lg font-bold text-sm shadow">
           Back to Journal Articles
         </Link>
       </div>
@@ -86,52 +86,52 @@ export default function BlogDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 pt-28 pb-16 relative overflow-hidden">
+    <div className="min-h-screen bg-slate-50 text-slate-800 pt-28 pb-16 relative overflow-hidden">
       {/* Background Glows */}
       <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-teal-500/5 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-blue-500/5 blur-[120px] pointer-events-none" />
 
       <div className="max-w-4xl mx-auto px-4 relative z-10 space-y-8 animate-fadeIn">
         {/* Navigation Breadcrumb */}
-        <div className="text-xs text-slate-500 flex items-center gap-1.5 font-medium">
-          <Link to="/" className="hover:text-slate-350">Home</Link>
+        <div className="text-xs text-slate-400 flex items-center gap-1.5 font-medium">
+          <Link to="/" className="hover:text-slate-600">Home</Link>
           <span>/</span>
-          <Link to="/blogs" className="hover:text-slate-350">Journal</Link>
+          <Link to="/blogs" className="hover:text-slate-600">Journal</Link>
           <span>/</span>
-          <span className="text-slate-400 truncate max-w-[200px] md:max-w-none">{blog.title}</span>
+          <span className="text-slate-500 truncate max-w-[200px] md:max-w-none">{blog.title}</span>
         </div>
 
         {/* Back Button */}
         <div>
           <Link
             to="/blogs"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-teal-400 hover:text-teal-300 transition"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-teal-600 hover:text-teal-700 transition"
           >
             ← Back to Journal Articles
           </Link>
         </div>
 
         {/* Article Layout */}
-        <article className="space-y-6 bg-slate-900/15 border border-slate-850/60 rounded-3xl p-6 md:p-8 backdrop-blur-md">
+        <article className="space-y-6 bg-white border border-slate-200/60 rounded-3xl p-6 md:p-8 shadow-sm">
           {/* Header Metadata */}
           <div className="space-y-4">
             <div className="flex flex-wrap items-center gap-2 text-2xs font-semibold">
-              <span className="bg-teal-500/10 text-teal-400 px-2.5 py-1 rounded-md border border-teal-500/20 uppercase tracking-wider">
+              <span className="bg-teal-50 text-teal-700 px-2.5 py-1 rounded-md border border-teal-200 uppercase tracking-wider">
                 {blog.category || 'homeopathy'}
               </span>
-              <span className="text-slate-500">•</span>
-              <span className="text-slate-405">📅 {formatDate(blog.createdAt)}</span>
-              <span className="text-slate-500">•</span>
-              <span className="text-slate-405">👁️ {blog.views} Reads</span>
+              <span className="text-slate-300">•</span>
+              <span className="text-slate-500">📅 {formatDate(blog.createdAt)}</span>
+              <span className="text-slate-300">•</span>
+              <span className="text-slate-500">👁️ {blog.views} Reads</span>
             </div>
 
-            <h1 className="text-2xl md:text-4xl font-extrabold leading-tight text-slate-105">
+            <h1 className="text-2xl md:text-4xl font-extrabold leading-tight text-slate-800">
               {blog.title}
             </h1>
 
             {/* Author Profile */}
-            <div className="flex items-center gap-3 pt-3 border-t border-slate-900 pb-2">
-              <div className="w-10 h-10 rounded-full overflow-hidden bg-slate-950 border border-slate-800 flex items-center justify-center text-xs">
+            <div className="flex items-center gap-3 pt-3 border-t border-slate-100 pb-2">
+              <div className="w-10 h-10 rounded-full overflow-hidden bg-slate-50 border border-slate-200 flex items-center justify-center text-xs">
                 {blog.author?.avatar ? (
                   <img src={blog.author.avatar} alt={blog.author.name} className="w-full h-full object-cover" />
                 ) : (
@@ -139,10 +139,10 @@ export default function BlogDetailPage() {
                 )}
               </div>
               <div>
-                <strong className="text-slate-300 font-bold text-sm block leading-snug">
+                <strong className="text-slate-700 font-bold text-sm block leading-snug">
                   By {blog.author?.name || 'Homeopathy Specialist'}
                 </strong>
-                <span className="text-[10px] text-slate-550 block font-medium mt-0.5">
+                <span className="text-[10px] text-slate-400 block font-medium mt-0.5">
                   Consulting Practitioner & Health Educator
                 </span>
               </div>
@@ -151,7 +151,7 @@ export default function BlogDetailPage() {
 
           {/* Large cover image */}
           {blog.coverImage && (
-            <div className="aspect-[21/9] w-full rounded-2xl overflow-hidden border border-slate-850 bg-slate-950">
+            <div className="aspect-[21/9] w-full rounded-2xl overflow-hidden border border-slate-200 bg-slate-50">
               <img
                 src={blog.coverImage}
                 alt={blog.title}
@@ -162,28 +162,28 @@ export default function BlogDetailPage() {
 
           {/* Summary Quote */}
           {blog.summary && (
-            <div className="bg-teal-500/5 border-l-4 border-teal-500 p-4 rounded-r-xl">
-              <p className="text-slate-300 text-xs md:text-sm italic font-medium">
+            <div className="bg-teal-50 border-l-4 border-teal-600 p-4 rounded-r-xl">
+              <p className="text-slate-700 text-xs md:text-sm italic font-medium">
                 "{blog.summary}"
               </p>
             </div>
           )}
 
           {/* Main Body Content */}
-          <div className="pt-2 border-t border-slate-900/60 pb-6">
+          <div className="pt-2 border-t border-slate-100 pb-6">
             {renderContent(blog.content)}
           </div>
 
           {/* Tags list */}
           {blog.tags && blog.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 pt-4 border-t border-slate-900">
-              <span className="text-2xs text-slate-500 font-bold uppercase tracking-wider flex items-center mr-1">
+            <div className="flex flex-wrap gap-2 pt-4 border-t border-slate-100">
+              <span className="text-2xs text-slate-400 font-bold uppercase tracking-wider flex items-center mr-1">
                 🏷️ Tags:
               </span>
               {blog.tags.map((tag, idx) => (
                 <span
                   key={idx}
-                  className="bg-slate-950 border border-slate-850 text-slate-400 text-3xs font-semibold px-2.5 py-1 rounded"
+                  className="bg-slate-50 border border-slate-200 text-slate-600 text-3xs font-semibold px-2.5 py-1 rounded"
                 >
                   #{tag}
                 </span>

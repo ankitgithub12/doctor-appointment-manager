@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { appointmentService, statsService } from '../../api/services.js';
+import { appointmentService } from '../../api/services.js';
 import StatusBadge from '../../components/ui/StatusBadge.jsx';
-import SearchInput from '../../components/ui/SearchInput.jsx';
 import EmptyState from '../../components/ui/EmptyState.jsx';
 import { TableSkeleton } from '../../components/ui/Skeleton.jsx';
 import toast from 'react-hot-toast';
@@ -37,7 +36,7 @@ export default function AdminAppointments() {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Delete this appointment?')) return;
+    if (!window.confirm('Are you sure you want to delete this appointment?')) return;
     try {
       await appointmentService.deleteAppointment(id);
       toast.success('Appointment deleted');
@@ -50,16 +49,20 @@ export default function AdminAppointments() {
   if (loading) return <TableSkeleton rows={5} cols={5} />;
 
   return (
-    <div className="space-y-6 animate-fadeIn">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div className="space-y-6 animate-fadeIn text-slate-800">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-100 pb-4">
         <div>
-          <h1 className="text-2xl font-extrabold">Manage Appointments</h1>
-          <p className="text-slate-400 text-sm mt-1">{appointments.length} total appointments</p>
+          <h1 className="text-2xl font-extrabold text-slate-900">Manage Appointments</h1>
+          <p className="text-slate-500 text-sm mt-1">{appointments.length} total appointments</p>
         </div>
         <div className="flex gap-2 flex-wrap">
           {['', 'pending', 'confirmed', 'completed', 'cancelled'].map((s) => (
             <button key={s} onClick={() => setStatusFilter(s)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition ${statusFilter === s ? 'bg-teal-500 text-slate-950 border-teal-500' : 'border-slate-800 text-slate-400 hover:bg-slate-800'}`}>
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider border transition cursor-pointer ${
+                statusFilter === s 
+                  ? 'bg-teal-600 text-white border-teal-600 shadow-xs' 
+                  : 'border-slate-200 bg-white text-slate-500 hover:text-teal-600 hover:bg-slate-50'
+              }`}>
               {s || 'All'}
             </button>
           ))}
@@ -69,48 +72,49 @@ export default function AdminAppointments() {
       {appointments.length > 0 ? (
         <div className="space-y-4">
           {appointments.map((app) => (
-            <div key={app._id} className="bg-slate-900/30 border border-slate-800 rounded-xl p-5 flex flex-col lg:flex-row gap-5 justify-between items-start hover:border-slate-700/50 transition-all">
-              <div className="space-y-3 flex-1">
+            <div key={app._id} className="bg-white border border-slate-200/60 rounded-xl p-5 flex flex-col lg:flex-row gap-5 justify-between items-start hover:border-teal-350 shadow-sm transition-all duration-200">
+              <div className="space-y-3 flex-1 w-full">
                 <div className="flex flex-wrap items-center gap-3">
                   <StatusBadge status={app.status} />
-                  <span className="text-slate-300 text-sm font-semibold">{formatDate(app.preferredDate)}</span>
-                  <span className="text-slate-500">•</span>
-                  <span className="text-slate-300 text-sm">Slot: {app.preferredTime}</span>
+                  <span className="text-slate-700 text-sm font-bold">{formatDate(app.preferredDate)}</span>
+                  <span className="text-slate-350">•</span>
+                  <span className="text-slate-700 text-sm font-semibold">Slot: {app.preferredTime}</span>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
                   <div>
-                    <label className="text-xs text-slate-500 block uppercase font-bold">Patient</label>
-                    <span className="text-slate-200 font-semibold text-sm">{app.patientName} ({app.phone})</span>
-                    <span className="block text-xs text-slate-400">{app.email}</span>
+                    <label className="text-[10px] text-slate-400 block uppercase font-bold tracking-wider">Patient Details</label>
+                    <span className="text-slate-800 font-bold text-sm">{app.patientName} ({app.phone})</span>
+                    <span className="block text-xs text-slate-500 font-semibold">{app.email}</span>
                   </div>
                   <div>
-                    <label className="text-xs text-slate-500 block uppercase font-bold">Doctor</label>
-                    <span className="text-slate-200 font-semibold text-sm">{app.doctor?.name || 'Unassigned'}</span>
+                    <label className="text-[10px] text-slate-400 block uppercase font-bold tracking-wider">Assigned Doctor</label>
+                    <span className="text-slate-800 font-bold text-sm">{app.doctor?.name || 'Unassigned'}</span>
                   </div>
                 </div>
                 <div>
-                  <label className="text-xs text-slate-500 block uppercase font-bold">Concern</label>
-                  <p className="text-slate-300 text-sm italic">"{app.healthConcern}"</p>
+                  <label className="text-[10px] text-slate-400 block uppercase font-bold tracking-wider">Health Concern</label>
+                  <p className="text-slate-600 text-sm italic mt-0.5">"{app.healthConcern}"</p>
                 </div>
-                <div className="flex gap-2 items-center">
-                  <input type="text" placeholder="Add notes..." className="bg-slate-950/80 border border-slate-800 rounded-lg py-1.5 px-3 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-teal-500 flex-1"
+                <div className="flex gap-2 items-center pt-2">
+                  <input type="text" placeholder="Add custom notes..." className="bg-slate-50 border border-slate-200 rounded-lg py-1.5 px-3 text-sm text-slate-700 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-teal-500 flex-1"
                     value={notesText[app._id] !== undefined ? notesText[app._id] : app.notes || ''}
                     onChange={(e) => setNotesText({ ...notesText, [app._id]: e.target.value })} />
-                  <button onClick={() => handleUpdateStatus(app._id, app.status)} className="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-700 transition">Save</button>
+                  <button onClick={() => handleUpdateStatus(app._id, app.status)} className="bg-slate-50 hover:bg-slate-100 text-slate-600 px-4 py-1.5 text-xs font-bold rounded-lg border border-slate-200 transition cursor-pointer">Save Note</button>
                 </div>
               </div>
-              <div className="flex lg:flex-col gap-2 w-full lg:w-auto lg:border-l lg:border-slate-800/80 lg:pl-5">
+              
+              <div className="flex lg:flex-col gap-2 w-full lg:w-auto lg:border-l lg:border-slate-100 lg:pl-5 pt-2 lg:pt-0">
                 {['confirmed', 'completed', 'cancelled'].map((s) => (
                   <button key={s} onClick={() => handleUpdateStatus(app._id, s)} disabled={app.status === s}
-                    className={`flex-1 lg:w-32 text-xs font-bold py-2 px-3 rounded-lg border transition disabled:opacity-30 disabled:pointer-events-none ${
-                      s === 'confirmed' ? 'bg-emerald-500/10 hover:bg-emerald-500/20 border-emerald-500/20 text-emerald-400' :
-                      s === 'completed' ? 'bg-blue-500/10 hover:bg-blue-500/20 border-blue-500/20 text-blue-400' :
-                      'bg-rose-500/10 hover:bg-rose-500/20 border-rose-500/20 text-rose-400'
+                    className={`flex-1 lg:w-32 text-xs font-bold py-2 px-3 rounded-lg border transition disabled:opacity-30 disabled:pointer-events-none cursor-pointer ${
+                      s === 'confirmed' ? 'bg-emerald-50 hover:bg-emerald-100 border-emerald-200 text-emerald-700' :
+                      s === 'completed' ? 'bg-blue-50 hover:bg-blue-100 border-blue-200 text-blue-700' :
+                      'bg-rose-50 hover:bg-rose-100 border-rose-200 text-rose-700'
                     }`}>
                     {s.charAt(0).toUpperCase() + s.slice(1)}
                   </button>
                 ))}
-                <button onClick={() => handleDelete(app._id)} className="flex-1 lg:w-32 bg-slate-800 hover:bg-rose-950/40 hover:text-rose-400 border border-slate-700 text-slate-400 text-xs font-bold py-2 px-3 rounded-lg transition">Delete</button>
+                <button onClick={() => handleDelete(app._id)} className="flex-1 lg:w-32 bg-white hover:bg-rose-50 border border-slate-200 hover:border-rose-200 text-slate-500 hover:text-rose-600 text-xs font-bold py-2 px-3 rounded-lg transition cursor-pointer">Delete</button>
               </div>
             </div>
           ))}

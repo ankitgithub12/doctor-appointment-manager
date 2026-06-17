@@ -73,16 +73,16 @@ export default function PatientNotifications() {
   };
 
   return (
-    <div className="space-y-6 animate-fadeIn max-w-3xl">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800 pb-4">
+    <div className="space-y-6 animate-fadeIn max-w-3xl text-slate-800">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-100 pb-4">
         <div>
-          <h1 className="text-2xl font-extrabold text-slate-100">Notifications</h1>
-          <p className="text-sm text-slate-400">Stay informed about your clinic bookings and alerts.</p>
+          <h1 className="text-2xl font-extrabold text-slate-800">Notifications</h1>
+          <p className="text-sm text-slate-500">Stay informed about your clinic bookings and alerts.</p>
         </div>
         {notifications.some((n) => !n.isRead) && (
           <button
             onClick={handleMarkAllAsRead}
-            className="text-xs bg-slate-905 hover:bg-slate-800 text-emerald-400 hover:text-emerald-300 py-1.5 px-3 rounded-lg border border-slate-800 font-semibold transition"
+            className="text-xs bg-white hover:bg-slate-50 text-teal-700 hover:text-teal-800 py-1.5 px-3 rounded-lg border border-slate-200 font-semibold transition cursor-pointer"
           >
             ✓ Mark All Read
           </button>
@@ -99,19 +99,21 @@ export default function PatientNotifications() {
               onClick={() => !n.isRead && handleMarkAsRead(n._id)}
               className={`border rounded-xl p-4 flex gap-4 items-start justify-between transition ${
                 n.isRead
-                  ? 'bg-slate-900/10 border-slate-850/60 opacity-70'
-                  : 'bg-emerald-500/5 border-emerald-505/20 hover:bg-emerald-500/10 cursor-pointer'
+                  ? 'bg-white border-slate-200/60 opacity-80'
+                  : 'bg-teal-50/40 border-teal-100/80 hover:bg-teal-50/70 cursor-pointer'
               }`}
             >
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-semibold text-slate-200">{n.title}</span>
+                  <span className={`text-sm font-bold ${n.isRead ? 'text-slate-600' : 'text-slate-800'}`}>
+                    {n.title}
+                  </span>
                   {!n.isRead && (
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse" />
                   )}
                 </div>
-                <p className="text-xs text-slate-350 leading-relaxed">{n.message}</p>
-                <span className="text-[10px] text-slate-500 block">{formatDate(n.createdAt)}</span>
+                <p className="text-xs text-slate-650 leading-relaxed">{n.message}</p>
+                <span className="text-[10px] text-slate-400 block">{formatDate(n.createdAt)}</span>
               </div>
 
               <button
@@ -119,7 +121,7 @@ export default function PatientNotifications() {
                   e.stopPropagation();
                   handleDelete(n._id);
                 }}
-                className="text-slate-500 hover:text-rose-400 p-1 rounded-lg text-sm transition"
+                className="text-slate-400 hover:text-rose-600 p-1 rounded-lg text-sm transition cursor-pointer"
                 aria-label="Delete notification"
               >
                 ✕

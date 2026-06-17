@@ -14,44 +14,52 @@ export default function AdminReviews() {
   useEffect(() => { fetchReviews(); }, []);
 
   const handleApprove = async (id, isApproved) => {
-    try { await reviewService.approveReview(id, isApproved); toast.success(isApproved ? 'Approved!' : 'Hidden'); fetchReviews(); } catch { toast.error('Failed'); }
+    try { await reviewService.approveReview(id, isApproved); toast.success(isApproved ? 'Approved successfully!' : 'Review hidden'); fetchReviews(); } catch { toast.error('Failed'); }
   };
   const handleDelete = async (id) => {
-    if (!window.confirm('Delete this review?')) return;
-    try { await reviewService.deleteReview(id); toast.success('Deleted'); fetchReviews(); } catch { toast.error('Failed'); }
+    if (!window.confirm('Are you sure you want to delete this review?')) return;
+    try { await reviewService.deleteReview(id); toast.success('Deleted successfully'); fetchReviews(); } catch { toast.error('Failed'); }
   };
 
   if (loading) return <div className="grid grid-cols-1 md:grid-cols-2 gap-6">{[1,2,3,4].map(i => <CardSkeleton key={i} />)}</div>;
 
   return (
-    <div className="space-y-6 animate-fadeIn">
-      <h1 className="text-2xl font-extrabold">Moderate Reviews</h1>
+    <div className="space-y-6 animate-fadeIn text-slate-800">
+      <div className="border-b border-slate-100 pb-4">
+        <h1 className="text-2xl font-extrabold text-slate-900">Moderate Reviews</h1>
+        <p className="text-sm text-slate-500 mt-1">Approve, reject, or hide reviews and success stories submitted by patients.</p>
+      </div>
+
       {reviews.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {reviews.map((rev) => (
-            <div key={rev._id} className="bg-slate-900/30 border border-slate-800 rounded-xl p-5 space-y-3 flex flex-col justify-between">
+            <div key={rev._id} className="bg-white border border-slate-200/60 rounded-xl p-5 space-y-3 flex flex-col justify-between hover:border-teal-350 shadow-sm transition-all duration-200">
               <div className="space-y-2">
                 <div className="flex justify-between items-center gap-3">
-                  <span className={`text-xs px-2 py-0.5 rounded border font-semibold uppercase ${rev.isApproved ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-amber-500/10 text-amber-400 border-amber-500/20'}`}>
+                  <span className={`text-[10px] px-2 py-0.5 rounded border font-bold uppercase tracking-wider ${rev.isApproved ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 'bg-amber-50 text-amber-700 border-amber-100'}`}>
                     {rev.isApproved ? 'Approved' : 'Pending'}
                   </span>
                   <span className="text-amber-500 text-sm font-bold">{'★'.repeat(rev.rating)}{'☆'.repeat(5 - rev.rating)}</span>
                 </div>
-                <div className="flex gap-2.5 items-center">
-                  <div className="w-9 h-9 bg-slate-800 border border-slate-700 text-slate-300 font-bold rounded-full flex items-center justify-center text-xs">{rev.initials}</div>
+                <div className="flex gap-2.5 items-center pt-1">
+                  <div className="w-9 h-9 bg-teal-55 border border-teal-100 text-teal-600 font-bold rounded-full flex items-center justify-center text-xs shadow-2xs">{rev.initials}</div>
                   <div>
-                    <h4 className="text-sm font-bold text-slate-200">{rev.patientName}</h4>
-                    <span className="text-xs text-slate-500 block">Condition: {rev.condition}</span>
+                    <h4 className="text-sm font-bold text-slate-800">{rev.patientName}</h4>
+                    <span className="text-xs text-slate-500 block font-medium">Condition: {rev.condition}</span>
                   </div>
                 </div>
-                <p className="text-slate-300 text-sm italic leading-relaxed">"{rev.text}"</p>
+                <p className="text-slate-600 text-sm italic leading-relaxed pt-1">"{rev.text}"</p>
               </div>
-              <div className="flex gap-2 justify-end pt-3 border-t border-slate-800/80">
+              <div className="flex gap-2 justify-end pt-3 border-t border-slate-100">
                 <button onClick={() => handleApprove(rev._id, !rev.isApproved)}
-                  className={`text-xs font-bold py-1.5 px-3 rounded-lg border transition ${rev.isApproved ? 'bg-slate-800 hover:bg-slate-700 border-slate-700 text-slate-400' : 'bg-emerald-500/10 hover:bg-emerald-500/20 border-emerald-500/20 text-emerald-400'}`}>
+                  className={`text-xs font-bold py-1.5 px-3 rounded-lg border transition cursor-pointer ${
+                    rev.isApproved 
+                      ? 'bg-white hover:bg-slate-50 border-slate-200 text-slate-600' 
+                      : 'bg-emerald-50 hover:bg-emerald-100 border-emerald-200 text-emerald-700'
+                  }`}>
                   {rev.isApproved ? 'Hide' : 'Approve'}
                 </button>
-                <button onClick={() => handleDelete(rev._id)} className="bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 text-rose-400 text-xs font-bold py-1.5 px-3 rounded-lg transition">Delete</button>
+                <button onClick={() => handleDelete(rev._id)} className="bg-rose-50 hover:bg-rose-100 border border-rose-100 text-rose-700 text-xs font-bold py-1.5 px-3 rounded-lg transition cursor-pointer">Delete</button>
               </div>
             </div>
           ))}

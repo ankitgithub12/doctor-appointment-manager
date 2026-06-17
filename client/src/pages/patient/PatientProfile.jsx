@@ -98,41 +98,41 @@ export default function PatientProfile() {
   };
 
   return (
-    <div className="space-y-8 animate-fadeIn max-w-4xl">
+    <div className="space-y-8 animate-fadeIn max-w-4xl text-slate-800">
       <div>
-        <h1 className="text-2xl font-extrabold text-slate-100">My Profile</h1>
-        <p className="text-sm text-slate-400">View and update your personal info and security settings.</p>
+        <h1 className="text-2xl font-extrabold text-slate-800">My Profile</h1>
+        <p className="text-sm text-slate-500">View and update your personal info and security settings.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
         {/* Left Column: Avatar & Account Metadata */}
-        <div className="bg-slate-900/30 border border-slate-800 rounded-2xl p-6 text-center space-y-4">
-          <h3 className="font-bold text-slate-200 border-b border-slate-800 pb-2 text-left">Profile Picture</h3>
+        <div className="bg-white border border-slate-200/60 rounded-2xl p-6 text-center space-y-4 shadow-sm">
+          <h3 className="font-bold text-slate-800 border-b border-slate-100 pb-2 text-left">Profile Picture</h3>
           
           <div className="flex flex-col items-center gap-3">
-            <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-emerald-500/30 bg-slate-950 flex items-center justify-center relative group">
+            <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-teal-500/20 bg-slate-50 flex items-center justify-center relative group">
               {avatarPreview ? (
                 <img src={avatarPreview} alt={user?.name} className="w-full h-full object-cover" />
               ) : (
-                <span className="text-4xl text-slate-600">👤</span>
+                <span className="text-4xl text-slate-400">👤</span>
               )}
             </div>
             
-            <label className="cursor-pointer bg-slate-800 hover:bg-slate-700 text-slate-350 text-xs px-3 py-1.5 rounded-lg border border-slate-700/80 transition font-semibold">
+            <label className="cursor-pointer bg-slate-50 hover:bg-slate-100 text-slate-600 text-xs px-3 py-1.5 rounded-lg border border-slate-200 transition font-semibold">
               Choose Image
               <input type="file" accept="image/*" className="hidden" onChange={handleAvatarChange} />
             </label>
             <p className="text-2xs text-slate-500">Supports PNG, JPG, GIF up to 5MB</p>
           </div>
 
-          <div className="text-left pt-4 border-t border-slate-800/60 space-y-2 text-xs text-slate-400">
+          <div className="text-left pt-4 border-t border-slate-100 space-y-2 text-xs text-slate-500">
             <p className="flex justify-between">
               <span>Account Role:</span>
-              <span className="font-semibold text-emerald-400 uppercase">{user?.role}</span>
+              <span className="font-bold text-teal-655 uppercase">{user?.role}</span>
             </p>
             <p className="flex justify-between">
               <span>Registered Email:</span>
-              <span className="text-slate-350 truncate max-w-[150px]">{user?.email}</span>
+              <span className="text-slate-655 truncate max-w-[150px]">{user?.email}</span>
             </p>
           </div>
         </div>
@@ -140,45 +140,45 @@ export default function PatientProfile() {
         {/* Right Column: Detail Forms */}
         <div className="lg:col-span-2 space-y-6">
           {/* Profile Details Form */}
-          <form onSubmit={handleProfileSubmit} className="bg-slate-900/30 border border-slate-800 rounded-2xl p-6 space-y-4">
-            <h3 className="font-bold text-slate-200 border-b border-slate-800 pb-2">Personal Information</h3>
+          <form onSubmit={handleProfileSubmit} className="bg-white border border-slate-200/60 rounded-2xl p-6 space-y-4 shadow-sm">
+            <h3 className="font-bold text-slate-800 border-b border-slate-100 pb-2">Personal Information</h3>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="text-xs text-slate-400 block mb-1">Full Name</label>
+                <label className="text-xs text-slate-500 block mb-1">Full Name</label>
                 <input
                   type="text"
                   required
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-slate-50/50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-755 focus:outline-none focus:bg-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10 transition-all"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                 />
               </div>
 
               <div>
-                <label className="text-xs text-slate-400 block mb-1">Phone Number</label>
+                <label className="text-xs text-slate-500 block mb-1">Phone Number</label>
                 <input
                   type="text"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-slate-50/50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-755 focus:outline-none focus:bg-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10 transition-all"
                   value={form.phone}
                   onChange={(e) => setForm({ ...form, phone: e.target.value })}
                 />
               </div>
 
               <div>
-                <label className="text-xs text-slate-400 block mb-1">Date of Birth</label>
+                <label className="text-xs text-slate-500 block mb-1">Date of Birth</label>
                 <input
                   type="date"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-slate-50/50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-755 focus:outline-none focus:bg-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10 transition-all"
                   value={form.dateOfBirth}
                   onChange={(e) => setForm({ ...form, dateOfBirth: e.target.value })}
                 />
               </div>
 
               <div>
-                <label className="text-xs text-slate-400 block mb-1">Gender</label>
+                <label className="text-xs text-slate-500 block mb-1">Gender</label>
                 <select
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-slate-50/50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-755 focus:outline-none focus:bg-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10 transition-all"
                   value={form.gender}
                   onChange={(e) => setForm({ ...form, gender: e.target.value })}
                 >
@@ -190,9 +190,9 @@ export default function PatientProfile() {
               </div>
 
               <div>
-                <label className="text-xs text-slate-400 block mb-1">Blood Group</label>
+                <label className="text-xs text-slate-500 block mb-1">Blood Group</label>
                 <select
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-slate-50/50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-755 focus:outline-none focus:bg-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10 transition-all"
                   value={form.bloodGroup}
                   onChange={(e) => setForm({ ...form, bloodGroup: e.target.value })}
                 >
@@ -209,10 +209,10 @@ export default function PatientProfile() {
               </div>
 
               <div>
-                <label className="text-xs text-slate-400 block mb-1">Emergency Contact Number</label>
+                <label className="text-xs text-slate-500 block mb-1">Emergency Contact Number</label>
                 <input
                   type="text"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-slate-50/50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-755 focus:outline-none focus:bg-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10 transition-all"
                   value={form.emergencyContact}
                   onChange={(e) => setForm({ ...form, emergencyContact: e.target.value })}
                 />
@@ -220,10 +220,10 @@ export default function PatientProfile() {
             </div>
 
             <div>
-              <label className="text-xs text-slate-400 block mb-1">Residential Address</label>
+              <label className="text-xs text-slate-500 block mb-1">Residential Address</label>
               <textarea
                 rows={2}
-                className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500 resize-none"
+                className="w-full bg-slate-50/50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-755 focus:outline-none focus:bg-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10 transition-all resize-none"
                 value={form.address}
                 onChange={(e) => setForm({ ...form, address: e.target.value })}
               />
@@ -233,7 +233,7 @@ export default function PatientProfile() {
               <button
                 type="submit"
                 disabled={saving}
-                className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2.5 px-6 rounded-lg text-sm transition disabled:opacity-50"
+                className="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2.5 px-6 rounded-lg text-sm transition disabled:opacity-50 cursor-pointer"
               >
                 {saving ? 'Saving Profile...' : 'Save Changes'}
               </button>
@@ -241,28 +241,28 @@ export default function PatientProfile() {
           </form>
 
           {/* Change Password Form */}
-          <form onSubmit={handlePasswordSubmit} className="bg-slate-900/30 border border-slate-800 rounded-2xl p-6 space-y-4">
-            <h3 className="font-bold text-slate-200 border-b border-slate-800 pb-2">Security & Credentials</h3>
+          <form onSubmit={handlePasswordSubmit} className="bg-white border border-slate-200/60 rounded-2xl p-6 space-y-4 shadow-sm">
+            <h3 className="font-bold text-slate-800 border-b border-slate-100 pb-2">Security & Credentials</h3>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="text-xs text-slate-400 block mb-1">Current Password</label>
+                <label className="text-xs text-slate-500 block mb-1">Current Password</label>
                 <input
                   type="password"
                   required
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-slate-50/50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-755 focus:outline-none focus:bg-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10 transition-all"
                   value={pwForm.currentPassword}
                   onChange={(e) => setPwForm({ ...pwForm, currentPassword: e.target.value })}
                 />
               </div>
 
               <div>
-                <label className="text-xs text-slate-400 block mb-1">New Password</label>
+                <label className="text-xs text-slate-500 block mb-1">New Password</label>
                 <input
                   type="password"
                   required
                   minLength={6}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-slate-50/50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-755 focus:outline-none focus:bg-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10 transition-all"
                   value={pwForm.newPassword}
                   onChange={(e) => setPwForm({ ...pwForm, newPassword: e.target.value })}
                 />
@@ -273,7 +273,7 @@ export default function PatientProfile() {
               <button
                 type="submit"
                 disabled={changingPw}
-                className="bg-slate-800 hover:bg-slate-755 border border-slate-700 text-slate-250 font-bold py-2 px-5 rounded-lg text-sm transition"
+                className="bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 font-bold py-2.5 px-5 rounded-lg text-sm transition cursor-pointer"
               >
                 {changingPw ? 'Updating Password...' : 'Update Password'}
               </button>

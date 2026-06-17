@@ -101,16 +101,16 @@ export default function PatientAppointments() {
   };
 
   return (
-    <div className="space-y-6 animate-fadeIn">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800 pb-4">
+    <div className="space-y-6 animate-fadeIn text-slate-800">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-100 pb-4">
         <div>
-          <h1 className="text-2xl font-extrabold text-slate-100">My Consultations</h1>
-          <p className="text-sm text-slate-400">Track and manage your homeopathic session history.</p>
+          <h1 className="text-2xl font-extrabold text-slate-800">My Consultations</h1>
+          <p className="text-sm text-slate-500">Track and manage your homeopathic session history.</p>
         </div>
       </div>
 
       {/* Filters and search */}
-      <div className="flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center bg-slate-900/10 border border-slate-800/80 rounded-xl p-4">
+      <div className="flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center bg-white border border-slate-200/60 rounded-xl p-4 shadow-sm">
         <div className="flex-1 max-w-md">
           <SearchInput
             value={searchTerm}
@@ -118,15 +118,15 @@ export default function PatientAppointments() {
             placeholder="Search by specialist or concern..."
           />
         </div>
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0 scrollbar-none">
           {['all', 'pending', 'confirmed', 'completed', 'cancelled'].map((status) => (
             <button
               key={status}
               onClick={() => setStatusFilter(status)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all duration-150 whitespace-nowrap ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-150 whitespace-nowrap cursor-pointer ${
                 statusFilter === status
-                  ? 'bg-emerald-500 text-slate-950 font-bold'
-                  : 'bg-slate-900/50 text-slate-400 border border-slate-800 hover:text-slate-200'
+                  ? 'bg-teal-600 text-white shadow-sm'
+                  : 'bg-slate-50 text-slate-500 border border-slate-200 hover:text-teal-600 hover:bg-slate-100'
               }`}
             >
               {status}
@@ -144,41 +144,41 @@ export default function PatientAppointments() {
             <div
               key={app._id}
               onClick={() => handleViewDetails(app)}
-              className="bg-slate-900/30 border border-slate-850 hover:border-slate-750/80 rounded-xl p-5 transition cursor-pointer flex flex-col justify-between gap-4"
+              className="bg-white border border-slate-200/60 hover:border-teal-400/50 hover:shadow rounded-xl p-5 transition cursor-pointer flex flex-col justify-between gap-4"
             >
               <div className="space-y-3">
                 <div className="flex justify-between items-start">
                   <div>
-                    <h3 className="font-bold text-slate-200 text-base">
+                    <h3 className="font-bold text-slate-800 text-base">
                       {app.doctor?.name || 'Homeopathy Specialist'}
                     </h3>
-                    <p className="text-xs text-slate-500 font-semibold mt-0.5">
+                    <p className="text-xs text-slate-400 font-semibold mt-0.5">
                       {app.doctor?.specializations?.join(', ') || 'Homeopath'}
                     </p>
                   </div>
                   <StatusBadge status={app.status} />
                 </div>
 
-                <div className="text-xs text-slate-400 space-y-1 bg-slate-950/45 p-2.5 rounded-lg border border-slate-900">
-                  <p>📅 <span className="font-medium text-slate-300">{formatDate(app.preferredDate)}</span></p>
-                  <p>⏰ <span className="font-medium text-slate-300">Slot: {app.preferredTime}</span></p>
+                <div className="text-xs text-slate-600 space-y-1 bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                  <p>📅 <span className="font-semibold text-slate-700">{formatDate(app.preferredDate)}</span></p>
+                  <p>⏰ <span className="font-semibold text-slate-700">Slot: {app.preferredTime}</span></p>
                 </div>
 
                 <div>
-                  <h4 className="text-xs text-slate-500 font-bold uppercase tracking-wide">Concern:</h4>
-                  <p className="text-sm text-slate-300 mt-1 italic line-clamp-2">
+                  <h4 className="text-xs text-slate-400 font-bold uppercase tracking-wide">Concern:</h4>
+                  <p className="text-sm text-slate-600 mt-1 italic line-clamp-2">
                     "{app.healthConcern}"
                   </p>
                 </div>
               </div>
 
-              <div className="flex justify-between items-center pt-2 border-t border-slate-900">
+              <div className="flex justify-between items-center pt-2 border-t border-slate-100">
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     handleViewDetails(app);
                   }}
-                  className="text-xs font-bold text-emerald-400 hover:text-emerald-300"
+                  className="text-xs font-bold text-teal-600 hover:text-teal-700 cursor-pointer"
                 >
                   View Full Details
                 </button>
@@ -186,7 +186,7 @@ export default function PatientAppointments() {
                 {app.status === 'pending' && (
                   <button
                     onClick={(e) => handleCancelClick(app, e)}
-                    className="text-xs font-bold text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 px-2 py-1 rounded"
+                    className="text-xs font-bold text-rose-600 hover:text-rose-700 hover:bg-rose-50 px-2 py-1 rounded cursor-pointer"
                   >
                     Cancel Booking
                   </button>
@@ -210,46 +210,46 @@ export default function PatientAppointments() {
       {/* Appointment Detail Modal */}
       <Modal isOpen={isDetailOpen} onClose={() => setIsDetailOpen(false)} title="Consultation Details">
         {selectedApp && (
-          <div className="space-y-5">
-            <div className="flex justify-between items-start border-b border-slate-800 pb-3">
+          <div className="space-y-5 text-slate-800">
+            <div className="flex justify-between items-start border-b border-slate-100 pb-3">
               <div>
-                <h3 className="text-lg font-bold text-slate-200">{selectedApp.doctor?.name || 'Homeopathy Specialist'}</h3>
-                <p className="text-sm text-slate-400">{selectedApp.doctor?.specializations?.join(', ') || 'Specialist'}</p>
+                <h3 className="text-lg font-bold text-slate-800">{selectedApp.doctor?.name || 'Homeopathy Specialist'}</h3>
+                <p className="text-sm text-slate-500">{selectedApp.doctor?.specializations?.join(', ') || 'Specialist'}</p>
               </div>
               <StatusBadge status={selectedApp.status} />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="bg-slate-950/50 p-3 rounded-lg border border-slate-850">
-                <span className="text-xs text-slate-500 block uppercase font-bold">Preferred Date</span>
-                <span className="text-slate-200 font-medium">{formatDate(selectedApp.preferredDate)}</span>
+              <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                <span className="text-xs text-slate-400 block uppercase font-bold">Preferred Date</span>
+                <span className="text-slate-700 font-semibold">{formatDate(selectedApp.preferredDate)}</span>
               </div>
-              <div className="bg-slate-950/50 p-3 rounded-lg border border-slate-850">
-                <span className="text-xs text-slate-500 block uppercase font-bold">Scheduled Time Slot</span>
-                <span className="text-slate-200 font-medium">{selectedApp.preferredTime}</span>
+              <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                <span className="text-xs text-slate-400 block uppercase font-bold">Scheduled Time Slot</span>
+                <span className="text-slate-700 font-semibold">{selectedApp.preferredTime}</span>
               </div>
             </div>
 
             <div>
-              <span className="text-xs text-slate-500 block uppercase font-bold">Health Concerns & History</span>
-              <div className="mt-1 bg-slate-950/40 p-4 rounded-lg border border-slate-850 text-slate-300 text-sm whitespace-pre-line italic">
+              <span className="text-xs text-slate-400 block uppercase font-bold">Health Concerns & History</span>
+              <div className="mt-1 bg-slate-50 p-4 rounded-lg border border-slate-200 text-slate-600 text-sm whitespace-pre-line italic">
                 "{selectedApp.healthConcern}"
               </div>
             </div>
 
             {selectedApp.notes && (
               <div>
-                <span className="text-xs text-emerald-400 block uppercase font-bold">Doctor Notes & Recommendation</span>
-                <div className="mt-1 bg-emerald-500/5 p-4 rounded-lg border border-emerald-500/10 text-slate-350 text-sm whitespace-pre-line">
+                <span className="text-xs text-teal-700 block uppercase font-bold">Doctor Notes & Recommendation</span>
+                <div className="mt-1 bg-teal-50 p-4 rounded-lg border border-teal-200 text-slate-700 text-sm whitespace-pre-line">
                   {selectedApp.notes}
                 </div>
               </div>
             )}
 
-            <div className="flex justify-end pt-4 border-t border-slate-800">
+            <div className="flex justify-end pt-4 border-t border-slate-100">
               <button
                 onClick={() => setIsDetailOpen(false)}
-                className="bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-lg text-sm font-semibold transition"
+                className="bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-200 px-4 py-2 rounded-lg text-sm font-semibold transition"
               >
                 Close
               </button>

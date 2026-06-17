@@ -65,7 +65,7 @@ export default function BlogPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 pt-28 pb-16 relative overflow-hidden">
+    <div className="min-h-screen bg-slate-50 text-slate-800 pt-28 pb-16 relative overflow-hidden">
       {/* Background Glows */}
       <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-teal-500/5 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-blue-500/5 blur-[120px] pointer-events-none" />
@@ -73,25 +73,25 @@ export default function BlogPage() {
       <div className="max-w-6xl mx-auto px-4 relative z-10 space-y-8 animate-fadeIn">
         {/* Header Block */}
         <div className="text-center max-w-2xl mx-auto space-y-3">
-          <span className="text-teal-400 text-sm font-semibold uppercase tracking-wider">Health Journal</span>
-          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-100">Homeopathy Wellness & Insights</h1>
-          <p className="text-slate-400 text-sm md:text-base">
+          <span className="text-teal-600 text-sm font-bold uppercase tracking-wider">Health Journal</span>
+          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-800">Homeopathy Wellness & Insights</h1>
+          <p className="text-slate-500 text-sm md:text-base">
             Discover articles on chronic treatment methodologies, natural remedies, and lifestyle coaching.
           </p>
         </div>
 
         {/* Filters and search */}
-        <div className="flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center bg-slate-900/20 border border-slate-800/80 rounded-2xl p-4">
+        <div className="flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center bg-white border border-slate-200/60 shadow-sm rounded-2xl p-4">
           {/* Categories */}
           <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0 scrollbar-none">
             {categories.map((cat) => (
               <button
                 key={cat.value}
                 onClick={() => setCategory(cat.value)}
-                className={`px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition whitespace-nowrap ${
+                className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition whitespace-nowrap cursor-pointer ${
                   category === cat.value
-                    ? 'bg-teal-500 text-slate-950 font-bold'
-                    : 'bg-slate-950 border border-slate-850 text-slate-450 hover:text-slate-205'
+                    ? 'bg-teal-600 text-white shadow-sm'
+                    : 'bg-slate-50 border border-slate-200 text-slate-500 hover:text-teal-600 hover:bg-slate-100'
                 }`}
               >
                 {cat.label}
@@ -118,10 +118,10 @@ export default function BlogPage() {
               {blogs.map((post) => (
                 <article
                   key={post._id}
-                  className="bg-slate-900/35 border border-slate-850 hover:border-slate-750 rounded-2xl overflow-hidden flex flex-col justify-between transition duration-200 group"
+                  className="bg-white border border-slate-200/60 hover:border-teal-400/50 hover:shadow-md rounded-2xl overflow-hidden flex flex-col justify-between transition duration-200 group"
                 >
                   <Link to={`/blogs/${post.slug}`}>
-                    <div className="aspect-[16/10] w-full bg-slate-950 overflow-hidden relative border-b border-slate-900">
+                    <div className="aspect-[16/10] w-full bg-slate-50 overflow-hidden relative border-b border-slate-100">
                       {post.coverImage ? (
                         <img
                           src={post.coverImage}
@@ -129,11 +129,11 @@ export default function BlogPage() {
                           className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-4xl bg-slate-900 text-slate-700">
+                        <div className="w-full h-full flex items-center justify-center text-4xl bg-slate-100 text-slate-400">
                           📝
                         </div>
                       )}
-                      <span className="absolute top-3 left-3 bg-teal-500/10 backdrop-blur-md text-teal-400 text-3xs font-extrabold uppercase px-2.5 py-1 rounded-md border border-teal-500/20">
+                      <span className="absolute top-3 left-3 bg-teal-50 text-teal-700 text-3xs font-extrabold uppercase px-2.5 py-1 rounded-md border border-teal-200">
                         {post.category || 'homeopathy'}
                       </span>
                     </div>
@@ -141,36 +141,36 @@ export default function BlogPage() {
 
                   <div className="p-5 flex-grow flex flex-col justify-between gap-4">
                     <div className="space-y-2">
-                      <span className="text-[10px] text-slate-500 font-semibold">
+                      <span className="text-[10px] text-slate-450 font-semibold">
                         📅 {formatDate(post.createdAt)}
                       </span>
                       <Link to={`/blogs/${post.slug}`} className="block">
-                        <h2 className="font-extrabold text-slate-200 text-base md:text-lg group-hover:text-teal-400 transition leading-snug line-clamp-2">
+                        <h2 className="font-extrabold text-slate-800 text-base md:text-lg group-hover:text-teal-600 transition leading-snug line-clamp-2">
                           {post.title}
                         </h2>
                       </Link>
-                      <p className="text-slate-400 text-xs md:text-sm line-clamp-3 leading-relaxed">
+                      <p className="text-slate-550 text-xs md:text-sm line-clamp-3 leading-relaxed">
                         {post.summary || 'Read details of our clinical homeopathy review and results...'}
                       </p>
                     </div>
 
-                    <div className="flex justify-between items-center pt-4 border-t border-slate-900 mt-2">
+                    <div className="flex justify-between items-center pt-4 border-t border-slate-100 mt-2">
                       <div className="flex gap-2 items-center">
-                        <div className="w-6 h-6 rounded-full overflow-hidden bg-slate-950 border border-slate-800 flex items-center justify-center text-[10px]">
+                        <div className="w-6 h-6 rounded-full overflow-hidden bg-slate-50 border border-slate-200 flex items-center justify-center text-[10px]">
                           {post.author?.avatar ? (
                             <img src={post.author.avatar} alt={post.author.name} className="w-full h-full object-cover" />
                           ) : (
                             '👤'
                           )}
                         </div>
-                        <span className="text-2xs font-semibold text-slate-400">
+                        <span className="text-2xs font-semibold text-slate-500">
                           {post.author?.name || 'Clinic Specialist'}
                         </span>
                       </div>
 
                       <Link
                         to={`/blogs/${post.slug}`}
-                        className="text-xs font-bold text-teal-400 hover:text-teal-300 flex items-center gap-1"
+                        className="text-xs font-bold text-teal-600 hover:text-teal-700 flex items-center gap-1"
                       >
                         Read Post ➔
                       </Link>
@@ -190,7 +190,7 @@ export default function BlogPage() {
             description={
               search
                 ? `No articles matched search term "${search}".`
-                : "No blog articles found in this category category list."
+                : "No blog articles found in this category list."
             }
           />
         )}

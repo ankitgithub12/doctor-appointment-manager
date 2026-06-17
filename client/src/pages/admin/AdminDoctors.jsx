@@ -45,10 +45,10 @@ export default function AdminDoctors() {
 
       if (editingDoc) {
         await doctorService.updateDoctor(editingDoc._id, formData);
-        toast.success('Doctor updated');
+        toast.success('Doctor updated successfully');
       } else {
         await doctorService.createDoctor(formData);
-        toast.success('Doctor added');
+        toast.success('Doctor added successfully');
       }
       setShowModal(false);
       fetchDoctors();
@@ -56,10 +56,10 @@ export default function AdminDoctors() {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Delete this doctor profile?')) return;
+    if (!window.confirm('Are you sure you want to delete this doctor profile?')) return;
     try {
       await doctorService.deleteDoctor(id);
-      toast.success('Doctor deleted');
+      toast.success('Doctor deleted successfully');
       fetchDoctors();
     } catch { toast.error('Delete failed'); }
   };
@@ -67,42 +67,42 @@ export default function AdminDoctors() {
   if (loading) return <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">{[1,2,3].map(i => <CardSkeleton key={i} />)}</div>;
 
   return (
-    <div className="space-y-6 animate-fadeIn">
-      <div className="flex items-center justify-between">
+    <div className="space-y-6 animate-fadeIn text-slate-800">
+      <div className="flex items-center justify-between border-b border-slate-100 pb-4">
         <div>
-          <h1 className="text-2xl font-extrabold">Manage Doctors</h1>
-          <p className="text-slate-400 text-sm mt-1">{doctors.length} specialist profiles</p>
+          <h1 className="text-2xl font-extrabold text-slate-900">Manage Doctors</h1>
+          <p className="text-slate-500 text-sm mt-1">{doctors.length} specialist profiles</p>
         </div>
-        <button onClick={openCreate} className="bg-teal-500 hover:bg-teal-400 text-slate-950 text-xs font-bold py-2.5 px-5 rounded-lg transition">+ Add Doctor</button>
+        <button onClick={openCreate} className="bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold py-2.5 px-5 rounded-lg transition cursor-pointer shadow-xs">+ Add Doctor</button>
       </div>
 
       {doctors.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {doctors.map((doc) => (
-            <div key={doc._id} className="bg-slate-900/30 border border-slate-800 rounded-xl p-5 space-y-4 hover:border-slate-700/50 transition-all">
+            <div key={doc._id} className="bg-white border border-slate-200/60 rounded-xl p-5 space-y-4 hover:border-teal-350 shadow-sm transition-all duration-200">
               <div className="flex gap-3 items-center">
                 {doc.photo ? (
-                  <img src={doc.photo} alt={doc.name} className="w-12 h-12 rounded-full object-cover border-2 border-teal-500/20" />
+                  <img src={doc.photo} alt={doc.name} className="w-12 h-12 rounded-full object-cover border-2 border-teal-100" />
                 ) : (
-                  <div className="w-12 h-12 bg-teal-500/10 border border-teal-500/20 text-teal-400 font-black flex items-center justify-center rounded-full text-lg">{doc.initials}</div>
+                  <div className="w-12 h-12 bg-teal-50 border border-teal-100 text-teal-600 font-black flex items-center justify-center rounded-full text-lg shadow-2xs">{doc.initials}</div>
                 )}
                 <div>
-                  <h4 className="font-bold text-slate-200 text-sm">{doc.name}</h4>
-                  <span className="text-xs text-slate-400 block">{doc.title}</span>
-                  <span className="text-xs text-slate-500">{doc.qualification}</span>
+                  <h4 className="font-bold text-slate-800 text-sm">{doc.name}</h4>
+                  <span className="text-xs text-slate-500 block font-medium">{doc.title}</span>
+                  <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mt-0.5">{doc.qualification}</span>
                 </div>
               </div>
               <div>
-                <label className="text-xs text-slate-500 block uppercase font-bold">Expertise</label>
-                <div className="flex flex-wrap gap-1 mt-1">
+                <label className="text-[10px] text-slate-400 block uppercase font-bold tracking-wider mb-1">Expertise Areas</label>
+                <div className="flex flex-wrap gap-1">
                   {doc.expertise?.map((exp) => (
-                    <span key={exp} className="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700">{exp}</span>
+                    <span key={exp} className="text-[11px] bg-slate-50 text-slate-600 px-2 py-0.5 rounded border border-slate-150 font-semibold">{exp}</span>
                   ))}
                 </div>
               </div>
-              <div className="flex gap-2 pt-2 border-t border-slate-800/80 justify-end">
-                <button onClick={() => openEdit(doc)} className="bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold py-1.5 px-3 rounded-lg border border-slate-700 transition">Edit</button>
-                <button onClick={() => handleDelete(doc._id)} className="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 text-xs font-semibold py-1.5 px-3 rounded-lg transition">Delete</button>
+              <div className="flex gap-2 pt-2 border-t border-slate-100 justify-end">
+                <button onClick={() => openEdit(doc)} className="bg-white hover:bg-slate-50 text-slate-600 text-xs font-bold py-1.5 px-3 rounded-lg border border-slate-200 transition cursor-pointer">Edit Profile</button>
+                <button onClick={() => handleDelete(doc._id)} className="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-100 text-xs font-bold py-1.5 px-3 rounded-lg transition cursor-pointer">Delete</button>
               </div>
             </div>
           ))}
@@ -122,39 +122,39 @@ export default function AdminDoctors() {
               { key: 'initials', label: 'Initials', required: true, placeholder: 'e.g. AK' },
               { key: 'experience', label: 'Experience (Years)', type: 'number', required: true },
               { key: 'consultationFee', label: 'Consultation Fee (₹)', type: 'number' },
-              { key: 'email', label: 'Email', type: 'email' },
-              { key: 'phone', label: 'Phone' },
+              { key: 'email', label: 'Email Address', type: 'email' },
+              { key: 'phone', label: 'Phone Number' },
             ].map(({ key, label, type = 'text', required, placeholder }) => (
               <div key={key}>
-                <label className="text-xs text-slate-400 block mb-1">{label} {required && '*'}</label>
+                <label className="text-xs text-slate-500 font-bold block mb-1">{label} {required && '*'}</label>
                 <input type={type} required={required} placeholder={placeholder}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-sm text-slate-200 focus:outline-none focus:border-teal-500"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-sm text-slate-800 focus:bg-white focus:outline-none focus:border-teal-500"
                   value={form[key]} onChange={(e) => setForm({ ...form, [key]: type === 'number' ? Number(e.target.value) : e.target.value })} />
               </div>
             ))}
           </div>
           <div>
-            <label className="text-xs text-slate-400 block mb-1">Expertise (comma separated)</label>
-            <input type="text" placeholder="Thyroid, Skin, Hair" className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-sm text-slate-200 focus:outline-none focus:border-teal-500"
+            <label className="text-xs text-slate-500 font-bold block mb-1">Expertise (comma separated)</label>
+            <input type="text" placeholder="Thyroid, Skin, Hair" className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-sm text-slate-800 focus:bg-white focus:outline-none focus:border-teal-500"
               value={form.expertise} onChange={(e) => setForm({ ...form, expertise: e.target.value })} />
           </div>
           <div>
-            <label className="text-xs text-slate-400 block mb-1">Certifications (comma separated)</label>
-            <input type="text" className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-sm text-slate-200 focus:outline-none focus:border-teal-500"
+            <label className="text-xs text-slate-500 font-bold block mb-1">Certifications (comma separated)</label>
+            <input type="text" className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-sm text-slate-800 focus:bg-white focus:outline-none focus:border-teal-500"
               value={form.certifications} onChange={(e) => setForm({ ...form, certifications: e.target.value })} />
           </div>
           <div>
-            <label className="text-xs text-slate-400 block mb-1">Biography *</label>
-            <textarea required rows="3" className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-sm text-slate-200 focus:outline-none focus:border-teal-500"
+            <label className="text-xs text-slate-500 font-bold block mb-1">Biography *</label>
+            <textarea required rows="3" className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-sm text-slate-800 focus:bg-white focus:outline-none focus:border-teal-500 resize-none"
               value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} />
           </div>
           <div>
-            <label className="text-xs text-slate-400 block mb-1">Profile Photo</label>
-            <input type="file" id="doctor-photo" accept="image/*" className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-sm text-slate-200 file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-teal-500/10 file:text-teal-400" />
+            <label className="text-xs text-slate-500 font-bold block mb-1">Profile Photo</label>
+            <input type="file" id="doctor-photo" accept="image/*" className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-sm text-slate-800 file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-teal-50 file:text-teal-700 file:cursor-pointer cursor-pointer" />
           </div>
-          <div className="flex gap-2 justify-end pt-2">
-            <button type="button" onClick={() => setShowModal(false)} className="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold py-2 px-4 rounded-lg text-sm border border-slate-700 transition">Cancel</button>
-            <button type="submit" className="bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold py-2 px-5 rounded-lg text-sm transition">{editingDoc ? 'Save Changes' : 'Add Doctor'}</button>
+          <div className="flex gap-2 justify-end pt-2 border-t border-slate-100">
+            <button type="button" onClick={() => setShowModal(false)} className="bg-white hover:bg-slate-50 text-slate-600 font-semibold py-2 px-4 rounded-lg text-sm border border-slate-250 transition cursor-pointer">Cancel</button>
+            <button type="submit" className="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-5 rounded-lg text-sm transition cursor-pointer">{editingDoc ? 'Save Changes' : 'Add Doctor'}</button>
           </div>
         </form>
       </Modal>

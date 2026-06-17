@@ -16,42 +16,93 @@ export default function DoctorProfile() {
     setSaving(true);
     try {
       await authService.updateProfile(form);
-      toast.success('Profile updated');
+      toast.success('Profile updated successfully');
       if (refreshUser) refreshUser();
-    } catch (error) { toast.error(error.message || 'Update failed'); } finally { setSaving(false); }
+    } catch (error) { 
+      toast.error(error.message || 'Update failed'); 
+    } finally { 
+      setSaving(false); 
+    }
   };
 
   const handlePassword = async (e) => {
     e.preventDefault();
     try {
       await authService.updatePassword(pwForm);
-      toast.success('Password changed');
+      toast.success('Password changed successfully');
       setPwForm({ currentPassword: '', newPassword: '' });
-    } catch (error) { toast.error(error.message || 'Failed'); }
+    } catch (error) { 
+      toast.error(error.message || 'Failed to update password'); 
+    }
   };
 
   return (
-    <div className="space-y-6 animate-fadeIn max-w-2xl">
-      <h1 className="text-2xl font-extrabold">My Profile</h1>
-      <form onSubmit={handleSubmit} className="bg-slate-900/30 border border-slate-800 rounded-xl p-6 space-y-4">
-        <h3 className="font-bold text-slate-200 border-b border-slate-800 pb-2">Personal Information</h3>
-        {[{ key: 'name', label: 'Full Name' }, { key: 'phone', label: 'Phone' }, { key: 'address', label: 'Address' }].map(({ key, label }) => (
+    <div className="space-y-6 animate-fadeIn max-w-2xl text-slate-800">
+      <div className="border-b border-slate-100 pb-4">
+        <h1 className="text-2xl font-extrabold text-slate-900">My Profile</h1>
+        <p className="text-sm text-slate-500">Manage your clinical personal details and account security.</p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="bg-white border border-slate-200/60 rounded-xl p-6 space-y-4 shadow-sm">
+        <h3 className="font-bold text-slate-800 border-b border-slate-100 pb-2.5">Personal Information</h3>
+        {[{ key: 'name', label: 'Full Name' }, { key: 'phone', label: 'Phone Number' }, { key: 'address', label: 'Address / Clinic Location' }].map(({ key, label }) => (
           <div key={key}>
-            <label className="text-xs text-slate-400 block mb-1">{label}</label>
-            <input type="text" className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm text-slate-200 focus:outline-none focus:border-blue-500" value={form[key]} onChange={(e) => setForm({ ...form, [key]: e.target.value })} />
+            <label className="text-xs text-slate-500 font-bold block mb-1">{label}</label>
+            <input 
+              type="text" 
+              className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-800 focus:bg-white focus:outline-none focus:border-teal-500" 
+              value={form[key]} 
+              onChange={(e) => setForm({ ...form, [key]: e.target.value })} 
+            />
           </div>
         ))}
         <div>
-          <label className="text-xs text-slate-400 block mb-1">Email</label>
-          <input type="email" disabled className="w-full bg-slate-950/50 border border-slate-800 rounded-lg p-2.5 text-sm text-slate-500 cursor-not-allowed" value={user?.email || ''} />
+          <label className="text-xs text-slate-500 font-bold block mb-1">Email Address</label>
+          <input 
+            type="email" 
+            disabled 
+            className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-400 cursor-not-allowed" 
+            value={user?.email || ''} 
+          />
         </div>
-        <button type="submit" disabled={saving} className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2.5 px-6 rounded-lg text-sm transition disabled:opacity-50">{saving ? 'Saving...' : 'Save Changes'}</button>
+        <button 
+          type="submit" 
+          disabled={saving} 
+          className="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2.5 px-6 rounded-lg text-sm transition disabled:opacity-50 cursor-pointer"
+        >
+          {saving ? 'Saving Changes...' : 'Save Changes'}
+        </button>
       </form>
-      <form onSubmit={handlePassword} className="bg-slate-900/30 border border-slate-800 rounded-xl p-6 space-y-4">
-        <h3 className="font-bold text-slate-200 border-b border-slate-800 pb-2">Change Password</h3>
-        <div><label className="text-xs text-slate-400 block mb-1">Current Password</label><input type="password" required className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm text-slate-200 focus:outline-none focus:border-blue-500" value={pwForm.currentPassword} onChange={(e) => setPwForm({ ...pwForm, currentPassword: e.target.value })} /></div>
-        <div><label className="text-xs text-slate-400 block mb-1">New Password</label><input type="password" required minLength={6} className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm text-slate-200 focus:outline-none focus:border-blue-500" value={pwForm.newPassword} onChange={(e) => setPwForm({ ...pwForm, newPassword: e.target.value })} /></div>
-        <button type="submit" className="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold py-2 px-5 rounded-lg text-sm transition">Update Password</button>
+
+      <form onSubmit={handlePassword} className="bg-white border border-slate-200/60 rounded-xl p-6 space-y-4 shadow-sm">
+        <h3 className="font-bold text-slate-800 border-b border-slate-100 pb-2.5">Change Password</h3>
+        <div>
+          <label className="text-xs text-slate-500 font-bold block mb-1">Current Password</label>
+          <input 
+            type="password" 
+            required 
+            className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-800 focus:bg-white focus:outline-none focus:border-teal-500" 
+            value={pwForm.currentPassword} 
+            onChange={(e) => setPwForm({ ...pwForm, currentPassword: e.target.value })} 
+          />
+        </div>
+        <div>
+          <label className="text-xs text-slate-500 font-bold block mb-1">New Password</label>
+          <input 
+            type="password" 
+            required 
+            minLength={6} 
+            className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-800 focus:bg-white focus:outline-none focus:border-teal-500" 
+            value={pwForm.newPassword} 
+            onChange={(e) => setPwForm({ ...pwForm, newPassword: e.target.value })} 
+          />
+        </div>
+        <button 
+          type="submit" 
+          className="bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 font-bold py-2.5 px-5 rounded-lg text-sm transition cursor-pointer"
+        >
+          Update Password
+        </button>
       </form>
     </div>
   );
