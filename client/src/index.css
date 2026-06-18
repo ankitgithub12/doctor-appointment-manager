@@ -107,10 +107,59 @@
 }
 
 .glow-card:hover {
-  @apply border-slate-200 shadow-xl shadow-teal-500/5 -translate-y-1;
+  @apply border-teal-500/30 shadow-2xl shadow-teal-500/8 -translate-y-1.5;
 }
 
 /* Spinner */
 .spinner {
   @apply animate-spin rounded-full h-4 w-4 border-2 border-slate-200 border-t-teal-600 inline-block align-middle mr-2;
 }
+
+/* Glassmorphism & Hover Animations */
+.glass-card {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.04);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-teal-600) 0%, var(--color-blue-700) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(-1deg); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+/* Dynamic Pulsing Glow for CTAs */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px 4px rgba(13, 148, 136, 0.15);
+  }
+}
+
+.btn-glow {
+  animation: pulseGlow 3s infinite;
+}
+

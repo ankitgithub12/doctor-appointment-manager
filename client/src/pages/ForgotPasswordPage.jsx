@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { authService } from '../api/services.js';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+import { auth as firebaseAuth } from '../lib/firebase.js';
+import { sendPasswordResetEmail } from 'firebase/auth';
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
@@ -13,12 +15,27 @@ export default function ForgotPasswordPage() {
     setSubmitting(true);
 
     try {
-      const response = await authService.forgotPassword(email);
-      if (response?.success) {
+      // 1. Try sending password reset email via Firebase Auth
+      try {
+        await sendPasswordResetEmail(firebaseAuth, email);
         setSent(true);
         toast.success('Reset email sent successfully!');
-      } else {
-        toast.error(response?.message || 'Failed to request password reset');
+      } catch (fbError) {
+        // 2. If user not found in Firebase, attempt syncing them from backend
+        if (fbError.code === 'auth/user-not-found' || fbError.code === 'auth/invalid-credential') {
+          console.log('User not found in Firebase Auth, trying backend synchronization...');
+          const syncResponse = await authService.firebaseSync(email);
+          if (syncResponse?.success) {
+            // Successfully synced / created the user in Firebase on-the-fly, retry reset email
+            await sendPasswordResetEmail(firebaseAuth, email);
+            setSent(true);
+            toast.success('Reset email sent successfully!');
+          } else {
+            toast.error(syncResponse?.message || 'User profile synchronization failed');
+          }
+        } else {
+          throw fbError;
+        }
       }
     } catch (error) {
       toast.error(error.message || 'An error occurred. Please try again.');
