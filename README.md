@@ -1,6 +1,6 @@
 # HomeHub Homeopathy Clinic & Management Portal
 
-HomeHub Homeopathy is a production-ready, full-stack MERN application for a clinical booking, patient dashboard, doctor dashboard, and administration management system. It is built using React (Vite) styled with Tailwind CSS v4 on the frontend, and Node.js (Express) with MongoDB on the backend.
+HomeHub Homeopathy is a production-ready, full-stack MERN application for a clinical booking, patient dashboard, doctor dashboard, and administration management system. It uses **Firebase Authentication** for credentials and password resets, and keeps patient profiles, doctors, and scheduling stored in a Mongoose MongoDB database. It is built using React (Vite) styled with Tailwind CSS v4 on the frontend, and Node.js (Express) on the backend.
 
 ---
 
@@ -10,11 +10,13 @@ HomeHub Homeopathy is a production-ready, full-stack MERN application for a clin
   - **Patient Portal**: Profile management (gender, DOB, emergency contacts, avatar uploads), appointment history tracker, review star-rating form modals, and bulk notifications inbox.
   - **Doctor Portal**: Availability hours scheduler, assigned appointment grids, review logs, patient history records, and profile bio setup.
   - **Admin Panel**: Manage doctor listings, moderate reviews, review callback inquiries, read contact inbox messages, update appointments (statuses/notes), edit system configurations, and view analytic metrics.
+- **Firebase Authentication**: Integrated on the client and verified securely in the backend via Firebase Admin SDK. Includes an on-the-fly migration fallback system for legacy MongoDB credentials.
+- **Transactional Forgot Password**: Password reset emails are triggered securely from the client side using Firebase's built-in email delivery infrastructure, removing local SMTP dependencies completely.
 - **Media Uploads (Cloudinary Integration)**: Direct Cloudinary uploads using buffered memory storage streams via Multer, enabling optimized rendering of doctor photos, blog covers, and profile avatars.
 - **Interactive Booking Flow**: Standalone bookings component supporting calendar future-date validations, prefilled patient contacts, and physician pre-selections.
 - **Premium Aesthetic & React Icons**: Uses SVG primitives from the `react-icons/fa` library rather than emojis, featuring a dark-themed glassmorphism layout, consistent spacing, and custom micro-animations.
 - **SEO & Search Optimization**: Page metadata overrides using `react-helmet-async`, structured schema business JSON-LD objects, XML sitemaps, and robots restrictions.
-- **Production-grade Security**: Equipped with bcrypt hashing, `express-mongo-sanitize`, `xss-clean` HTML filters, Helmet response headers, CORS protection, and strict path rate-limiters.
+- **Production-grade Security**: Equipped with Firebase JWT verification, `express-mongo-sanitize`, `xss-clean` HTML filters, Helmet response headers, CORS protection, and strict path rate-limiters.
 
 ---
 
@@ -22,6 +24,7 @@ HomeHub Homeopathy is a production-ready, full-stack MERN application for a clin
 
 ### Frontend (Client)
 - **Core Framework**: React 18 & Vite
+- **Authentication**: Firebase Client SDK
 - **Styling**: Tailwind CSS v4
 - **Routing**: React Router Dom v6
 - **Icons**: React Icons (FontAwesome pack)
@@ -30,10 +33,11 @@ HomeHub Homeopathy is a production-ready, full-stack MERN application for a clin
 
 ### Backend (Server)
 - **Runtime**: Node.js & Express
+- **Authentication**: Firebase Admin SDK
 - **Database**: MongoDB & Mongoose ODM
 - **Media Storage**: Cloudinary SDK
 - **File Uploads**: Multer memory storage
-- **Security & Logging**: Helmet, CORS, Express Rate Limit, Express Validator, Morgan, and BcryptJS
+- **Security & Logging**: Helmet, CORS, Express Rate Limit, Express Validator, Morgan, and BcryptJS (for legacy password verification)
 
 ---
 
@@ -46,7 +50,9 @@ doctor-website/
 │   ├── src/
 │   │   ├── api/                 # Axios configuration & services.js
 │   │   ├── components/          # Reusable UI primitives (Modal, Skeleton, Badges)
-│   │   ├── context/             # Global Auth state context (refreshUser support)
+│   │   ├── context/             # Global Auth state context (Firebase & Legacy fallbacks)
+│   │   ├── lib/
+│   │   │   └── firebase.js      # Firebase Client SDK initializer
 │   │   ├── pages/               # Page routing views
 │   │   │   ├── admin/           # Admin layout & sub-pages (doctors, reviews, settings)
 │   │   │   ├── doctor/          # Doctor layout & sub-pages (availability, appointments)
@@ -61,13 +67,13 @@ doctor-website/
 │   └── package.json
 │
 ├── server/                      # Backend API Server
-│   ├── config/                  # Database connection & Cloudinary setup
+│   ├── config/                  # Database connection, Cloudinary, & Firebase Admin setup
 │   ├── controllers/             # Endpoint action handlers (MVC Controllers)
 │   ├── middleware/              # Auth checks, sanitizers, limits, and error handlers
 │   ├── models/                  # Mongoose data schemas (MVC Models)
 │   ├── routes/                  # Express endpoints mappings (MVC Views)
 │   ├── seed/                    # Initial database populator scripts
-│   ├── services/                # Cloudinary uploads & SMTP email dispatch services
+│   ├── services/                # Cloudinary uploads service
 │   ├── utils/                   # Standardized apiResponse and pagination helpers
 │   ├── validations/             # Express-validator schemas
 │   ├── server.js                # App entry bootstrap
@@ -110,17 +116,23 @@ CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
 CLOUDINARY_API_KEY=your_cloudinary_api_key
 CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 
-# Email Config (Optional for password reset)
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=your_email@gmail.com
-SMTP_PASSWORD=your_app_password
-FROM_EMAIL="HomeHub Homeopathy" <noreply@homehub.com>
+# Firebase Admin SDK Configuration
+FIREBASE_PROJECT_ID=your_firebase_project_id
+FIREBASE_CLIENT_EMAIL=your_firebase_client_email
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYourPrivateKeyHere\n-----END PRIVATE KEY-----\n"
 ```
 
-Create a `.env` file inside the `client/` directory for VITE:
+Create a `.env` file inside the `client/` directory for Vite & Firebase client:
 ```env
 VITE_API_URL=http://localhost:5000/api
+
+# Firebase client-side config
+VITE_FIREBASE_API_KEY=your_firebase_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_firebase_project_id.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your_firebase_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_firebase_project_id.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
 ```
 
 ### 3. Install Dependencies
