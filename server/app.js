@@ -11,7 +11,6 @@ import hpp from 'hpp';
 
 import { connectDB } from './config/db.js';
 import { configureCloudinary } from './config/cloudinary.js';
-import './config/firebase.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { generalLimiter } from './middleware/rateLimiter.js';
 import { sanitizeInput, xssClean } from './middleware/sanitize.js';

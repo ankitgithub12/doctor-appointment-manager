@@ -4,13 +4,13 @@ import axiosClient from './axios.js';
 export const authService = {
   register: (userData) => axiosClient.post('/auth/register', userData),
   login: (credentials) => axiosClient.post('/auth/login', credentials),
-  loginLegacy: (credentials) => axiosClient.post('/auth/login-legacy', credentials),
-  firebaseSync: (email) => axiosClient.post('/auth/firebase-sync', { email }),
   getMe: () => axiosClient.get('/auth/me'),
   updateProfile: (formData) => axiosClient.put('/auth/profile', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   }),
   updatePassword: (data) => axiosClient.put('/auth/password', data),
+  forgotPassword: (email) => axiosClient.post('/auth/forgot-password', { email }),
+  resetPassword: (token, password) => axiosClient.post(`/auth/reset-password/${token}`, { password }),
 };
 
 // Users API (Admin)

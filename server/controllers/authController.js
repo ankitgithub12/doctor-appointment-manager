@@ -4,8 +4,8 @@ import { User } from '../models/User.js';
 import { Doctor } from '../models/Doctor.js';
 import asyncHandler from '../utils/asyncHandler.js';
 import AppError from '../utils/apiError.js';
-import admin from '../config/firebase.js';
 import { uploadAvatar, deleteFromCloudinary } from '../services/uploadService.js';
+import { sendPasswordResetEmail } from '../services/mailService.js';
 
 // Helper to generate JWT token
 const generateToken = (id) => {
@@ -18,24 +18,10 @@ const generateToken = (id) => {
 // @route   POST /api/auth/register
 // @access  Public
 export const register = asyncHandler(async (req, res) => {
-  const { name, email, phone, role, firebaseToken } = req.body;
+  const { name, email, password, phone, role } = req.body;
 
-  if (!firebaseToken) {
-    throw new AppError('Firebase authentication token is required', 400);
-  }
-
-  let decodedToken;
-  try {
-    decodedToken = await admin.auth().verifyIdToken(firebaseToken);
-  } catch (fbError) {
-    throw new AppError('Invalid Firebase authentication token', 401);
-  }
-
-  const { uid, email: fbEmail } = decodedToken;
-
-  // Double check email matches
-  if (fbEmail.toLowerCase() !== email.toLowerCase()) {
-    throw new AppError('Email does not match authenticated token', 400);
+  if (!email || !password) {
+    throw new AppError('Email and password are required', 400);
   }
 
   // Check if user already exists
@@ -45,16 +31,14 @@ export const register = asyncHandler(async (req, res) => {
   }
 
   const userRole = role || 'patient';
-  const randomPassword = crypto.randomBytes(16).toString('hex');
 
-  // Create user
+  // Create user (password is automatically hashed in Mongoose pre-save hook)
   const user = await User.create({
     name,
     email: email.toLowerCase(),
-    password: randomPassword,
+    password,
     phone,
     role: userRole,
-    firebaseUid: uid,
   });
 
   // If role is doctor, automatically create the linked Doctor document
@@ -100,35 +84,27 @@ export const register = asyncHandler(async (req, res) => {
 // @route   POST /api/auth/login
 // @access  Public
 export const login = asyncHandler(async (req, res) => {
-  const { firebaseToken } = req.body;
+  const { email, password } = req.body;
 
-  if (!firebaseToken) {
-    throw new AppError('Firebase authentication token is required', 400);
+  if (!email || !password) {
+    throw new AppError('Email and password are required', 400);
   }
-
-  let decodedToken;
-  try {
-    decodedToken = await admin.auth().verifyIdToken(firebaseToken);
-  } catch (fbError) {
-    throw new AppError('Invalid Firebase authentication token', 401);
-  }
-
-  const { uid, email } = decodedToken;
 
   // Check for user
-  const user = await User.findOne({ email: email.toLowerCase() });
+  const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
 
   if (!user) {
-    throw new AppError('No user profile associated with this account', 404);
+    throw new AppError('Invalid credentials', 401);
   }
 
   if (!user.isActive) {
     throw new AppError('Your account has been deactivated. Please contact support.', 401);
   }
 
-  // Link firebaseUid if not stored
-  if (!user.firebaseUid) {
-    user.firebaseUid = uid;
+  // Check if password matches
+  const isMatch = await user.matchPassword(password);
+  if (!isMatch) {
+    throw new AppError('Invalid credentials', 401);
   }
 
   // Update last login
@@ -223,74 +199,10 @@ export const updatePassword = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Legacy login for migrating existing users to Firebase
-// @route   POST /api/auth/login-legacy
+// @desc    Forgot Password - Send reset link via SendGrid
+// @route   POST /api/auth/forgot-password
 // @access  Public
-export const loginLegacy = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-
-  // Check for user
-  const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
-
-  if (!user) {
-    throw new AppError('Invalid credentials', 401);
-  }
-
-  if (!user.isActive) {
-    throw new AppError('Your account has been deactivated. Please contact support.', 401);
-  }
-
-  // Check if password matches
-  const isMatch = await user.matchPassword(password);
-  if (!isMatch) {
-    throw new AppError('Invalid credentials', 401);
-  }
-
-  // Link/Create in Firebase Auth
-  try {
-    const firebaseUser = await admin.auth().createUser({
-      email: user.email,
-      password: password,
-      displayName: user.name,
-    });
-    user.firebaseUid = firebaseUser.uid;
-  } catch (fbError) {
-    if (fbError.code === 'auth/email-already-exists') {
-      try {
-        const fbUser = await admin.auth().getUserByEmail(user.email);
-        user.firebaseUid = fbUser.uid;
-      } catch (getFbError) {
-        console.error('Failed to retrieve Firebase user during legacy login:', getFbError);
-      }
-    } else {
-      console.error('Failed to create Firebase user during legacy login:', fbError);
-    }
-  }
-
-  // Update last login
-  user.lastLogin = new Date();
-  await user.save({ validateBeforeSave: false });
-
-  const token = generateToken(user._id);
-
-  res.status(200).json({
-    success: true,
-    token,
-    user: {
-      id: user._id,
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
-      role: user.role,
-      avatar: user.avatar,
-    },
-  });
-});
-
-// @desc    Sync user to Firebase Auth on-the-fly during forgot password
-// @route   POST /api/auth/firebase-sync
-// @access  Public
-export const firebaseSync = asyncHandler(async (req, res) => {
+export const forgotPassword = asyncHandler(async (req, res) => {
   const { email } = req.body;
 
   if (!email) {
@@ -302,38 +214,67 @@ export const firebaseSync = asyncHandler(async (req, res) => {
     throw new AppError('No user found with that email address', 404);
   }
 
-  try {
-    const randomPassword = crypto.randomBytes(16).toString('hex');
-    const firebaseUser = await admin.auth().createUser({
-      email: user.email,
-      password: randomPassword,
-      displayName: user.name,
-    });
+  // Get reset token
+  const resetToken = user.getResetPasswordToken();
 
-    user.firebaseUid = firebaseUser.uid;
-    await user.save({ validateBeforeSave: false });
+  // Save user with token
+  await user.save({ validateBeforeSave: false });
+
+  // Create reset url
+  const clientUrl = process.env.CLIENT_URL || process.env.CORS_ORIGIN || 'http://localhost:5173';
+  const resetUrl = `${clientUrl}/reset-password/${resetToken}`;
+
+  try {
+    await sendPasswordResetEmail(user.email, resetUrl, user.name);
 
     res.status(200).json({
       success: true,
-      message: 'User synchronized to Firebase successfully',
+      message: 'Reset link sent to email',
     });
-  } catch (fbError) {
-    if (fbError.code === 'auth/email-already-exists') {
-      try {
-        const fbUser = await admin.auth().getUserByEmail(user.email);
-        user.firebaseUid = fbUser.uid;
-        await user.save({ validateBeforeSave: false });
+  } catch (err) {
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save({ validateBeforeSave: false });
 
-        res.status(200).json({
-          success: true,
-          message: 'User already exists in Firebase, database linked successfully',
-        });
-      } catch (getFbError) {
-        throw new AppError('Failed to synchronize existing Firebase account', 500);
-      }
-    } else {
-      console.error('Firebase sync error:', fbError);
-      throw new AppError('Failed to synchronize account to Firebase', 500);
-    }
+    console.error('Forgot password error:', err);
+    throw new AppError('Email could not be sent. Please try again later.', 500);
   }
+});
+
+// @desc    Reset Password
+// @route   POST /api/auth/reset-password/:token
+// @access  Public
+export const resetPassword = asyncHandler(async (req, res) => {
+  const { password } = req.body;
+
+  if (!password) {
+    throw new AppError('Password is required', 400);
+  }
+
+  // Get hashed token
+  const resetPasswordToken = crypto
+    .createHash('sha256')
+    .update(req.params.token)
+    .digest('hex');
+
+  const user = await User.findOne({
+    resetPasswordToken,
+    resetPasswordExpire: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    throw new AppError('Invalid or expired reset token', 400);
+  }
+
+  // Set new password in MongoDB (pre-save hook hashes it)
+  user.password = password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: 'Password reset successfully',
+  });
 });

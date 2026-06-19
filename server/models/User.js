@@ -76,11 +76,6 @@ const userSchema = new mongoose.Schema(
     // Password reset
     resetPasswordToken: String,
     resetPasswordExpire: Date,
-    firebaseUid: {
-      type: String,
-      unique: true,
-      sparse: true,
-    },
   },
   {
     timestamps: true,

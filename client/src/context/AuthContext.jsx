@@ -1,11 +1,5 @@
 import { createContext, useState, useEffect, useContext } from 'react';
 import { authService } from '../api/services.js';
-import { auth as firebaseAuth } from '../lib/firebase.js';
-import { 
-  signInWithEmailAndPassword, 
-  createUserWithEmailAndPassword, 
-  signOut as firebaseSignOut 
-} from 'firebase/auth';
 
 const AuthContext = createContext(null);
 
@@ -46,37 +40,14 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     setLoading(true);
     try {
-      let firebaseToken = null;
-
-      try {
-        // 1. Try Firebase Authentication first
-        const firebaseUserCredential = await signInWithEmailAndPassword(firebaseAuth, email, password);
-        firebaseToken = await firebaseUserCredential.user.getIdToken();
-      } catch (fbError) {
-        // If user not found in Firebase or password invalid, fallback to legacy login
-        if (fbError.code === 'auth/user-not-found' || fbError.code === 'auth/invalid-credential') {
-          console.log('Firebase auth failed, attempting legacy backend authentication...');
-          const response = await authService.loginLegacy({ email, password });
-          if (response?.success && response?.token) {
-            localStorage.setItem('homehub_token', response.token);
-            setToken(response.token);
-            setUser(response.user);
-            return response.user;
-          }
-          throw new Error(response?.message || 'Login failed');
-        }
-        throw new Error(fbError.message || 'Firebase login failed');
-      }
-
-      // 2. Log in to backend using Firebase Token
-      const response = await authService.login({ firebaseToken });
+      const response = await authService.login({ email, password });
       if (response?.success && response?.token) {
         localStorage.setItem('homehub_token', response.token);
         setToken(response.token);
         setUser(response.user);
         return response.user;
       }
-      throw new Error(response?.message || 'Backend authentication failed');
+      throw new Error(response?.message || 'Login failed');
     } catch (error) {
       throw error;
     } finally {
@@ -87,15 +58,8 @@ export const AuthProvider = ({ children }) => {
   // Register handler
   const register = async (name, email, password, phone, role) => {
     setLoading(true);
-    let createdFirebaseUser = null;
     try {
-      // 1. Register in Firebase Auth first
-      const firebaseUserCredential = await createUserWithEmailAndPassword(firebaseAuth, email, password);
-      createdFirebaseUser = firebaseUserCredential.user;
-      const firebaseToken = await createdFirebaseUser.getIdToken();
-
-      // 2. Register in backend
-      const response = await authService.register({ name, email, phone, role, firebaseToken });
+      const response = await authService.register({ name, email, password, phone, role });
       if (response?.success && response?.token) {
         localStorage.setItem('homehub_token', response.token);
         setToken(response.token);
@@ -104,14 +68,6 @@ export const AuthProvider = ({ children }) => {
       }
       throw new Error(response?.message || 'Registration failed');
     } catch (error) {
-      // Rollback Firebase user if backend registration fails
-      if (createdFirebaseUser) {
-        try {
-          await createdFirebaseUser.delete();
-        } catch (deleteError) {
-          console.error('Failed to rollback Firebase user registration:', deleteError);
-        }
-      }
       throw error;
     } finally {
       setLoading(false);
@@ -123,11 +79,6 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('homehub_token');
     setToken(null);
     setUser(null);
-    try {
-      await firebaseSignOut(firebaseAuth);
-    } catch (error) {
-      console.error('Firebase sign out error:', error);
-    }
     setLoading(false);
   };
 
